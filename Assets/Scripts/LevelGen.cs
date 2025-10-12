@@ -82,6 +82,11 @@ public class LevelGen : MonoBehaviour
                 {
                     grid[x, y] = 1;
                 }
+
+                if (y == 0)
+                {
+                    grid[x, y] = 1;
+                }
             }
         }
     }

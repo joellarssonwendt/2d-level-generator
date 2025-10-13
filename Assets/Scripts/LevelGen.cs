@@ -69,23 +69,34 @@ public class LevelGen : MonoBehaviour
     private void GenerateGrid()
     {
         grid = new int[width, height];
-
-        float f = (float)rng.NextDouble();
+        float f1 = (float)rng.NextDouble() * 0.05f;
+        Debug.Log($"(float)rng.NextDouble() f1 == {f1}");
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                float noise = Mathf.PerlinNoise(x * f, y * f);
+                float noise = Mathf.PerlinNoise(x * f1, y * f1);
 
-                if (noise > 0.5f)
+                if (noise > 0.4f)
                 {
                     grid[x, y] = 1;
                 }
+            }
+        }
 
-                if (y == 0)
+        float f2 = (float)rng.NextDouble() * 0.2f;
+        Debug.Log($"(float)rng.NextDouble() f2 == {f2}");
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                float noise = Mathf.PerlinNoise(x * f2, y * f2);
+
+                if (noise > 0.5f)
                 {
-                    grid[x, y] = 1;
+                    grid[x, y] = 0;
                 }
             }
         }

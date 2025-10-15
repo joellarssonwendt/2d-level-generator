@@ -42,6 +42,10 @@ public class LevelGen : MonoBehaviour
 
             Debug.Log($"World seed: {seed}");
         }
+        else if (int.TryParse(seedString, out seed))
+        {
+            Debug.Log($"World seed: {seed}");
+        }
         else
         {
             seed = 23;
@@ -62,7 +66,7 @@ public class LevelGen : MonoBehaviour
             Debug.Log($"World seed: {seedString}");
         }
 
-        Debug.Log($"Hidden seed: {seed}");
+        //Debug.Log($"Internal seed: {seed}");
         rng = new System.Random(seed);
     }
 

@@ -8,7 +8,7 @@ public class LevelGen : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private string seedString = "";
     [SerializeField] private Tilemap tilemap;
-    [SerializeField] private TileBase defaultTile;
+    [SerializeField] private TileBase ruleTile;
     [SerializeField] private int width, height;
 
     private int[,] grid;
@@ -139,7 +139,7 @@ public class LevelGen : MonoBehaviour
 
                 if (grid[x, y] == 1)
                 {
-                    TileBase tile = defaultTile;
+                    TileBase tile = ruleTile;
                     tilemap.SetTile(pos, tile);
                 }
                 else

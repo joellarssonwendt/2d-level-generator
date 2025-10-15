@@ -10,6 +10,9 @@ public class LevelGen : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase ruleTile;
     [SerializeField] private int width, height;
+    [SerializeField] private GameObject spikesPrefab;
+    [SerializeField] private GameObject lavaPrefab;
+    [SerializeField] private GameObject frogPrefab;
 
     private int[,] grid;
     private System.Random rng;
@@ -30,6 +33,8 @@ public class LevelGen : MonoBehaviour
         GenerateGrid();
         DrawTiles();
         SpawnPlayer();
+        AddHazards();
+        SpawnEnemies();
     }
 
     private void HashSeed()
@@ -74,10 +79,8 @@ public class LevelGen : MonoBehaviour
     {
         grid = new int[width, height];
 
-        float f1 = (float)rng.NextDouble() * 0.05f;
-        //Debug.Log($"(float)rng.NextDouble() f1 == {f1}");
-        float f2 = (float)rng.NextDouble() * 0.2f;
-        //Debug.Log($"(float)rng.NextDouble() f2 == {f2}");
+        float a = (float)rng.NextDouble() * 0.05f;
+        float b = (float)rng.NextDouble() * 0.2f;
 
         for (int y = 0; y < height; y++)
         {
@@ -85,23 +88,19 @@ public class LevelGen : MonoBehaviour
             {
                 if (y < 5)
                 {
-                    float noise = Mathf.PerlinNoise(x * f1, y * f1);
+                    float noise = Mathf.PerlinNoise(x * a, y * a);
 
                     if (noise > 0.4f)
                     {
                         grid[x, y] = 1;
                     }
 
-                    //Debug.Log($"Perlin Noise Sample (Add) == {noise}");
-
-                    noise = Mathf.PerlinNoise(x * f2, y * f2);
+                    noise = Mathf.PerlinNoise(x * b, y * b);
 
                     if (noise > 0.5f)
                     {
                         grid[x, y] = 0;
                     }
-
-                    //Debug.Log($"Perlin Noise Sample (Remove) == {noise}");
                 }
 
                 if (y == 3 && x > 2 && x % 5 == 0)
@@ -158,6 +157,38 @@ public class LevelGen : MonoBehaviour
             {
                 Instantiate(playerPrefab, new Vector3(0.5f, y, 0), Quaternion.identity);
                 return;
+            }
+        }
+    }
+
+    private void AddHazards()
+    {
+        int i = rng.Next(2, 10);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (y > 0 && y < 4 && x > 0 && x % i == 0 && grid[x, y+1] == 0 && grid[x, y] == 1)
+                {
+                    Instantiate(spikesPrefab, new Vector3(x + 0.5f, y + 1.5f, 0), Quaternion.identity);
+                }
+            }
+        }
+    }
+
+    private void SpawnEnemies()
+    {
+        int i = rng.Next(2, 10);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (y > 0 && y < height - 1 && x > 0 && x % i == 0 && grid[x, y + 1] == 0 && grid[x, y] == 1)
+                {
+                    Instantiate(frogPrefab, new Vector3(x + 0.5f, y + 1f, 0), Quaternion.identity);
+                }
             }
         }
     }

@@ -266,7 +266,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log($"ChargeTime = {chargeTime}");
         chargeTime = 0f;
         attackTimer = attackCooldown;
-        PlaySFX(attackSwingsSFX, 0.4f);
+        PlaySFX(attackSwingsSFX, 0.2f);
 
         Invoke("ResetAttackAnimationLocked", 0.1f);
     }

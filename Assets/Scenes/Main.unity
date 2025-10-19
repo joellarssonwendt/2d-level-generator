@@ -614,7 +614,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000
@@ -1218,7 +1218,7 @@ MonoBehaviour:
     rid: 1514630335034032332
   m_ShadowCastingSource: 2
   m_ShadowMesh:
-    m_Mesh: {fileID: 1273952355}
+    m_Mesh: {fileID: 1683052948}
     m_LocalBounds:
       m_Center: {x: -1.5, y: 1.5, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0}
@@ -1876,7 +1876,77 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!43 &1273952355
+--- !u!1 &1516574288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1516574290}
+  - component: {fileID: 1516574289}
+  - component: {fileID: 1516574291}
+  m_Layer: 0
+  m_Name: LevelGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!156049354 &1516574289
+Grid:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516574288}
+  m_Enabled: 1
+  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellGap: {x: 0, y: 0, z: 0}
+  m_CellLayout: 0
+  m_CellSwizzle: 0
+--- !u!4 &1516574290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516574288}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1245837367}
+  - {fileID: 844674129}
+  - {fileID: 1016463615}
+  - {fileID: 102621734}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1516574291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516574288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff55e0f760b9ede468c7e7617779438e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 7672800267459301218, guid: e377ce172e4fd254dae66db422c08f56, type: 3}
+  seedString: 
+  tilemap: {fileID: 844674131}
+  ruleTile: {fileID: 11400000, guid: a72878039992781489a70020b518e013, type: 2}
+  width: 100
+  height: 10
+  spikesPrefab: {fileID: 1543285032271954832, guid: 7c0cb17990a946f4390ba2cc320c73fe, type: 3}
+  lavaPrefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
+  frogPrefab: {fileID: 2470296758901724854, guid: 22c82169c769aab4c8acd1019d35e09c, type: 3}
+--- !u!43 &1683052948
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2041,76 +2111,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1516574288
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1516574290}
-  - component: {fileID: 1516574289}
-  - component: {fileID: 1516574291}
-  m_Layer: 0
-  m_Name: LevelGen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!156049354 &1516574289
-Grid:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516574288}
-  m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
-  m_CellGap: {x: 0, y: 0, z: 0}
-  m_CellLayout: 0
-  m_CellSwizzle: 0
---- !u!4 &1516574290
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516574288}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1245837367}
-  - {fileID: 844674129}
-  - {fileID: 1016463615}
-  - {fileID: 102621734}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1516574291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1516574288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff55e0f760b9ede468c7e7617779438e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7672800267459301218, guid: e377ce172e4fd254dae66db422c08f56, type: 3}
-  seedString: 
-  tilemap: {fileID: 844674131}
-  ruleTile: {fileID: 11400000, guid: a72878039992781489a70020b518e013, type: 2}
-  width: 100
-  height: 10
-  spikesPrefab: {fileID: 1543285032271954832, guid: 7c0cb17990a946f4390ba2cc320c73fe, type: 3}
-  lavaPrefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-  frogPrefab: {fileID: 2470296758901724854, guid: 22c82169c769aab4c8acd1019d35e09c, type: 3}
 --- !u!1 &1881878448
 GameObject:
   m_ObjectHideFlags: 0

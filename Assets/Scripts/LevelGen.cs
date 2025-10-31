@@ -5,19 +5,16 @@ public class LevelGen : MonoBehaviour
 {
     public static LevelGen Singleton;
 
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject playerPrefab, lavaPrefab;
     [SerializeField] private string seedString = "";
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase ruleTile;
     [SerializeField] private int width, height;
-    [SerializeField] private GameObject spikesPrefab;
-    [SerializeField] private GameObject lavaPrefab;
-    [SerializeField] private GameObject frogPrefab;
 
     private int[,] grid;
     private System.Random rng;
 
-    private void Awake()
+    void Awake()
     {
         if (LevelGen.Singleton != null && LevelGen.Singleton != this)
         {
@@ -29,15 +26,13 @@ public class LevelGen : MonoBehaviour
             LevelGen.Singleton = this;
         }
 
-        HashSeed();
+        rng = HashSeed(); // Do NOT use 'rng' before this line. Required for PCG determinism!
         GenerateGrid();
-        DrawTiles();
+        DrawTilemap();
         SpawnPlayer();
-        AddHazards();
-        SpawnEnemies();
     }
 
-    private void HashSeed()
+    private System.Random HashSeed()
     {
         int seed;
 
@@ -72,60 +67,36 @@ public class LevelGen : MonoBehaviour
         }
 
         //Debug.Log($"Internal seed: {seed}");
-        rng = new System.Random(seed);
+        return new System.Random(seed);
     }
 
     private void GenerateGrid()
     {
         grid = new int[width, height];
 
-        float a = (float)rng.NextDouble() * 0.05f;
-        float b = (float)rng.NextDouble() * 0.2f;
+        float granularity = (float)rng.NextDouble() * 0.05f;
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                if (y < 5)
-                {
-                    float noise = Mathf.PerlinNoise(x * a, y * a);
+                float noise = Mathf.PerlinNoise(x * granularity, y * granularity);
 
-                    if (noise > 0.4f)
-                    {
-                        grid[x, y] = 1;
-                    }
-
-                    noise = Mathf.PerlinNoise(x * b, y * b);
-
-                    if (noise > 0.5f)
-                    {
-                        grid[x, y] = 0;
-                    }
-                }
-
-                if (y == 3 && x > 2 && x % 5 == 0)
-                {
-                    int i = rng.Next(-2, 2);
-
-                    grid[x, y+i] = 1;
-                    grid[x, y-1+i] = 1;
-                    grid[x-1, y+i] = 1;
-                    grid[x-1, y-1+i] = 1;
-                }
-
-                if (x == 1 && y == 1)
+                if (noise > 0.5f)
                 {
                     grid[x, y] = 1;
-                    grid[x-1, y] = 1;
-                    grid[x, y-1] = 1;
-                    grid[x-1, y-1] = 1;
                 }
             }
         }
     }
 
-    private void DrawTiles()
+    private void DrawTilemap()
     {
+        float r = (float)rng.NextDouble();
+        float g = (float)rng.NextDouble();
+        float b = (float)rng.NextDouble();
+        tilemap.color = new Color(r, g, b);
+
         Vector3Int pos = new();
 
         for (int y = 0; y < height; y++)
@@ -138,8 +109,7 @@ public class LevelGen : MonoBehaviour
 
                 if (grid[x, y] == 1)
                 {
-                    TileBase tile = ruleTile;
-                    tilemap.SetTile(pos, tile);
+                    tilemap.SetTile(pos, ruleTile);
                 }
                 else
                 {
@@ -147,47 +117,29 @@ public class LevelGen : MonoBehaviour
                 }
             }
         }
+
+        pos = new();
+
+        for (int x = -50; x < width + 50; x++)
+        {
+            if (x % 10 == 0)
+            {
+                pos.x = x + 1;
+                Instantiate(lavaPrefab, pos, Quaternion.identity);
+            }
+        }
     }
 
     private void SpawnPlayer()
     {
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            if (grid[0, y] == 0)
+            for (int y = 1; y < height; y++)
             {
-                Instantiate(playerPrefab, new Vector3(0.5f, y, 0), Quaternion.identity);
-                return;
-            }
-        }
-    }
-
-    private void AddHazards()
-    {
-        int i = rng.Next(2, 10);
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (y > 0 && y < 4 && x > 0 && x % i == 0 && grid[x, y+1] == 0 && grid[x, y] == 1)
+                if (grid[x, y] == 0 && grid[x, y - 1] == 1)
                 {
-                    Instantiate(spikesPrefab, new Vector3(x + 0.5f, y + 1.5f, 0), Quaternion.identity);
-                }
-            }
-        }
-    }
-
-    private void SpawnEnemies()
-    {
-        int i = rng.Next(2, 10);
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (y > 0 && y < height - 1 && x > 0 && x % i == 0 && grid[x, y + 1] == 0 && grid[x, y] == 1)
-                {
-                    Instantiate(frogPrefab, new Vector3(x + 0.5f, y + 1f, 0), Quaternion.identity);
+                    Instantiate(playerPrefab, new Vector3(x + 0.5f, y, 0), Quaternion.identity);
+                    return;
                 }
             }
         }

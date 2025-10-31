@@ -1,5 +1,3 @@
-using NUnit.Framework.Internal;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -549,23 +547,25 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDeath()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         isDead = true;
         canAct = false;
         flashSprite = false;
         StopCoroutine(SpriteFlash());
         spriteRenderer.material.shader = defaultSpriteShader;
         spriteRenderer.color = HPColor;
-        PlaySFX(deathSFX, 0.8f);
+
         StartCoroutine(DeathRoutine());
     }
 
     IEnumerator DeathRoutine()
     {
-        // Play death animation
-        // VFX
-        // SFX
-        // Slow time (?)
-        //Debug.Log("PlayerController::PlayerDeath()");
+        CameraFollow.Singleton.FollowTarget(false);
+        PlaySFX(deathSFX, 0.8f);
 
         yield return new WaitForSeconds(1.5f);
         ResetPlayer();
@@ -614,6 +614,10 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isGrounded", false);
         animator.SetBool("isDodgeRolling", false);
         animator.Play("Idle");
+
+        // Reset camera
+        CameraFollow.Singleton.SnapToTarget();
+        CameraFollow.Singleton.FollowTarget(true);
     }
 
 

@@ -84,7 +84,7 @@ public class LevelGen : MonoBehaviour
 
                 float noise = Mathf.PerlinNoise(x * granularity, y * granularity);
 
-                if (noise > 0.4f)
+                if (noise > 0.5f)
                 {
                     grid[x, y] = 0;
                 }

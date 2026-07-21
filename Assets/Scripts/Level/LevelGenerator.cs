@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class LevelGen : MonoBehaviour
+public class LevelGenerator : MonoBehaviour
 {
-    public static LevelGen Singleton;
+    private static LevelGenerator singleton;
 
     [SerializeField] private GameObject playerPrefab, lavaPrefab;
     [SerializeField] private string seedString = "";
@@ -16,17 +16,10 @@ public class LevelGen : MonoBehaviour
 
     void Awake()
     {
-        if (LevelGen.Singleton != null && LevelGen.Singleton != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        else
-        {
-            LevelGen.Singleton = this;
-        }
+        if (singleton == null) singleton = this;
+        else Destroy(gameObject);
 
-        rng = HashSeed(); // Do NOT use 'rng' before this line. Required for PCG determinism!
+        rng = HashSeed(); // Do NOT use member 'rng' before this line. Required for PCG determinism!
         GenerateGrid();
         DrawTilemap();
         SpawnPlayer();

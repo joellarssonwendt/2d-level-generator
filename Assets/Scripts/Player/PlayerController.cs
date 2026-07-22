@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,7 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask hazardLayer;
     private Animator animator;
-    private AudioSource audioSource;
     private CapsuleCollider2D capsuleCollider;
     private InputSystem_Actions inputActions;
     private SpriteRenderer spriteRenderer;
@@ -105,7 +103,6 @@ public class PlayerController : MonoBehaviour
         HP = maxHP;
 
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2d = GetComponent<Rigidbody2D>();
@@ -192,7 +189,7 @@ public class PlayerController : MonoBehaviour
             jumpInputTimer = 0f;
             coyoteTimer = 0f;
             rigidbody2d.linearVelocityY = jumpPower;
-            PlaySFX(jumpSFX, 0.1f);
+            AudioSourcePool.Play(jumpSFX, 0.1f);
         }
     }
 
@@ -211,7 +208,7 @@ public class PlayerController : MonoBehaviour
             if (!wasGroundedLastFrame && !isLedgeGrabbing)
             {
                 canJump = true;
-                PlaySFX(landingSFX, 0.5f);
+                AudioSourcePool.Play(landingSFX, 0.5f);
             }
 
             coyoteTimer = coyoteTime;
@@ -264,7 +261,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log($"ChargeTime = {chargeTime}");
         chargeTime = 0f;
         attackTimer = attackCooldown;
-        PlaySFX(attackSwingsSFX, 0.2f);
+        AudioSourcePool.Play(attackSwingsSFX, 0.2f);
 
         Invoke("ResetAttackAnimationLocked", 0.1f);
     }
@@ -375,7 +372,7 @@ public class PlayerController : MonoBehaviour
         rigidbody2d.linearVelocityX = transform.localScale.x * dodgeRollDistance;
         animator.SetBool("isDodgeRolling", true);
         animator.Play("DodgeRoll");
-        PlaySFX(dodgeRollSFX, 0.5f);
+        AudioSourcePool.Play(dodgeRollSFX, 0.5f);
 
         yield return new WaitForSeconds(dodgeRollDuration * 0.8f);
         IgnoreEnemyCollision(false);
@@ -442,7 +439,7 @@ public class PlayerController : MonoBehaviour
 
             animator.Play("LedgeGrab");
             canJump = true;
-            PlaySFX(ledgeGrabSFX, 0.3f);
+            AudioSourcePool.Play(ledgeGrabSFX, 0.3f);
 
             //Debug.Log("PlayerController::isLedgeGrabbing == " + isLedgeGrabbing);
         }
@@ -505,7 +502,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        PlaySFX(hurtSFX, 0.5f);
+        AudioSourcePool.Play(hurtSFX, 0.5f);
         animator.SetBool("isKnockedBack", true);
         animator.Play("Hurt");
         flashSprite = true;
@@ -565,7 +562,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator DeathRoutine()
     {
         CameraFollow.Singleton.FollowTarget(false);
-        PlaySFX(deathSFX, 0.8f);
+        AudioSourcePool.Play(deathSFX, 0.8f);
 
         yield return new WaitForSeconds(1.5f);
         ResetPlayer();
@@ -620,19 +617,9 @@ public class PlayerController : MonoBehaviour
         CameraFollow.Singleton.FollowTarget(true);
     }
 
-
-    void PlaySFX(AudioClip[] audioClips, float volume = 1f, float pitch = 1f)
-    {
-        audioSource.pitch = Random.Range(0.9f, 1.1f) * pitch;
-        audioSource.volume = Random.Range(0.9f, 1.1f) * volume;
-
-        int randomIndex = Random.Range(0, audioClips.Length);
-        audioSource.PlayOneShot(audioClips[randomIndex]);
-    }
-
     public void Footsteps() // Called from animation events
     {
-        PlaySFX(footStepsSFX, 0.4f);
+        AudioSourcePool.Play(footStepsSFX, 0.4f);
     }
 
     void OnDrawGizmos()

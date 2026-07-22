@@ -5,7 +5,7 @@ public class LevelGenerator : MonoBehaviour
 {
     private static LevelGenerator singleton;
 
-    [SerializeField] private GameObject playerPrefab, lavaPrefab;
+    [SerializeField] private GameObject playerPrefab, lavaPrefab, frogPrefab;
     [SerializeField] private string seedString = "";
     [SerializeField] private Tilemap tilemap;
     [SerializeField] private TileBase ruleTile;
@@ -22,6 +22,7 @@ public class LevelGenerator : MonoBehaviour
         rng = HashSeed(); // Do NOT use member 'rng' before this line. Required for PCG determinism!
         GenerateGrid();
         DrawTilemap();
+        SpawnFrogs();
         SpawnPlayer();
     }
 
@@ -67,7 +68,7 @@ public class LevelGenerator : MonoBehaviour
     {
         grid = new int[width, height];
 
-        float granularity = (float)rng.NextDouble() * 0.05f;
+        float granularity = (float)rng.NextDouble() * 0.2f;
 
         for (int y = 0; y < height; y++)
         {
@@ -78,6 +79,16 @@ public class LevelGenerator : MonoBehaviour
                 if (noise > 0.5f)
                 {
                     grid[x, y] = 1;
+                }
+
+                if (rng.NextDouble() < 0.2)
+                {
+                    grid[x, y] = 1;
+                }
+
+                if (y % 4 == 1)
+                {
+                    grid[x, y] = 0;
                 }
             }
         }
@@ -119,6 +130,20 @@ public class LevelGenerator : MonoBehaviour
             {
                 pos.x = x + 1;
                 Instantiate(lavaPrefab, pos, Quaternion.identity);
+            }
+        }
+    }
+
+    private void SpawnFrogs()
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 1; y < height; y++)
+            {
+                if (grid[x, y] == 0 && grid[x, y - 1] == 1 && rng.NextDouble() < 0.05)
+                {
+                    Instantiate(frogPrefab, new Vector3(x + 0.5f, y, 0), Quaternion.identity);
+                }
             }
         }
     }

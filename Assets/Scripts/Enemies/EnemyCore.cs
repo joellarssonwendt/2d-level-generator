@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class EnemyCore : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class EnemyCore : MonoBehaviour
     // Cache
     [SerializeField] private LayerMask groundLayer;
     private Animator animator;
-    private AudioSource audioSource;
     private Collider2D myCollider;
     private SpriteRenderer spriteRenderer;
     [HideInInspector] public Rigidbody2D rigidbody2d;
@@ -47,13 +45,6 @@ public class EnemyCore : MonoBehaviour
         if (animator == null)
         {
             Debug.LogError("EnemyCore.animator MISSING FROM " + gameObject.name);
-        }
-
-        audioSource = GetComponent<AudioSource>();
-
-        if (audioSource == null)
-        {
-            Debug.LogError("EnemyCore.audioSource MISSING FROM " + gameObject.name);
         }
 
         myCollider = GetComponent<Collider2D>();
@@ -189,15 +180,6 @@ public class EnemyCore : MonoBehaviour
         // VFX
         // SFX
         Destroy(gameObject);
-    }
-
-    void PlaySFX(AudioClip[] audioClips, float volume = 1f, float pitch = 1f)
-    {
-        audioSource.pitch = Random.Range(0.9f, 1.1f) * pitch;
-        audioSource.volume = Random.Range(0.9f, 1.1f) * volume;
-
-        int randomIndex = Random.Range(0, audioClips.Length);
-        audioSource.PlayOneShot(audioClips[randomIndex]);
     }
 
     void OnDrawGizmos()

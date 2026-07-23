@@ -1,16 +1,13 @@
 fileFormatVersion: 2
-guid: fce0b5aa85a2e294794c6ef64ee2cf2a
+guid: 1c74355910bd1864fbc6bf6ec425760d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5158404753353345565
-    second: frog_0
+      213: 319555984487164829
+    second: player_runattack_0
   - first:
-      213: -6160767750220376532
-    second: frog_1
-  - first:
-      213: -8667238115605912382
-    second: frog_2
+      213: -3391420298241026448
+    second: player_runattack_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,17 +99,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: frog_0
+      name: player_runattack_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
+        x: 1
+        y: 23
+        width: 50
+        height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,52 +144,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1a0053fac5569740800000000000000
-      internalID: 5158404753353345565
+      spriteID: d9b253d897a4f6400800000000000000
+      internalID: 319555984487164829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: frog_1
+      name: player_runattack_1
       rect:
         serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 14
+        y: 1
+        width: 20
+        height: 20
+      alignment: 9
+      pivot: {x: 0.6, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c269e605f5e808aa0800000000000000
-      internalID: -6160767750220376532
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: frog_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2c46597dad8c7b780800000000000000
-      internalID: -8667238115605912382
+      spriteID: 0765b4f05314fe0d0800000000000000
+      internalID: -3391420298241026448
       vertices: []
       indices: 
       edges: []
@@ -175,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9cbd6cf6cb185e042b2eeffdb1a9f7bb
+    spriteID: 30e6f92c84f875746aa83aba542a9e6d
     internalID: 0
     vertices: []
     indices: 
@@ -185,9 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      frog_0: 5158404753353345565
-      frog_1: -6160767750220376532
-      frog_2: -8667238115605912382
+      player_runattack_0: 319555984487164829
+      player_runattack_1: -3391420298241026448
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,13 +1,19 @@
 fileFormatVersion: 2
-guid: 1c74355910bd1864fbc6bf6ec425760d
+guid: 3304b73b98f45ba45869eaa4bc72f63c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 319555984487164829
-    second: player_runattack_0
+      213: -4041520525942356419
+    second: player_jumpattack_0
   - first:
-      213: -3391420298241026448
-    second: player_runattack_1
+      213: -6793339619155885552
+    second: player_jumpattack_1
+  - first:
+      213: 8152150914312541155
+    second: player_jumpattack_2
+  - first:
+      213: 2046142720902011319
+    second: player_jumpattack_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,49 +105,119 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_runattack_0
+      name: player_jumpattack_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 23
+        y: 38
         width: 50
-        height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        height: 25
+      alignment: 9
+      pivot: {x: 0.47, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d9b253d897a4f6400800000000000000
-      internalID: 319555984487164829
+      spriteID: d3681ca9e72a9e7c0800000000000000
+      internalID: -4041520525942356419
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_runattack_1
+      name: player_jumpattack_1
       rect:
         serializedVersion: 2
-        x: 14
-        y: 1
-        width: 20
-        height: 20
+        x: 59
+        y: 38
+        width: 25
+        height: 25
       alignment: 9
-      pivot: {x: 0.6, y: 0}
+      pivot: {x: 0.78, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0765b4f05314fe0d0800000000000000
-      internalID: -3391420298241026448
+      spriteID: 01240a9eb9539b1a0800000000000000
+      internalID: -6793339619155885552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_jumpattack_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 50
+        height: 30
+      alignment: 9
+      pivot: {x: 0.46, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e399fa8012422170800000000000000
+      internalID: 8152150914312541155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_jumpattack_3
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 1
+        width: 27
+        height: 30
+      alignment: 9
+      pivot: {x: 0.78, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b99d17b6fb556c10800000000000000
+      internalID: 2046142720902011319
       vertices: []
       indices: 
       edges: []
@@ -150,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 30e6f92c84f875746aa83aba542a9e6d
+    spriteID: 0b6dbb001f1e376418ec4f83b87f472d
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_runattack_0: 319555984487164829
-      player_runattack_1: -3391420298241026448
+      player_jumpattack_0: -4041520525942356419
+      player_jumpattack_1: -6793339619155885552
+      player_jumpattack_2: 8152150914312541155
+      player_jumpattack_3: 2046142720902011319
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

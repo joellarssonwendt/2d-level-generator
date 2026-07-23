@@ -1,33 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[System.Serializable]
-public class TileData
-{
-    public TileBase tile;
-}
-
-[System.Serializable]
-public class ObjectData
-{
-    public GameObject obj;
-    public Vector3 pos;
-}
-
-[System.Serializable]
-public class ChunkData
-{
-    public List<TileData> tilemap = new();
-    public List<TileData> background = new();
-    public List<TileData> foreground = new();
-    public List<ObjectData> gameObjects = new();
-}
-
 public class WorldGenerator : MonoBehaviour
 {
-    private static readonly int CHUNK_WIDTH = 30;
-    private static readonly int CHUNK_HEIGHT = 20;
+    public static readonly int CHUNK_WIDTH = 10;
+    public static readonly int CHUNK_HEIGHT = 10;
+
     private static readonly string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
 
     private static WorldGenerator singleton;
@@ -41,27 +21,27 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private ChunkDatabase database;
 
     private System.Random rng;
+    private HashSet<Vector3Int> occupied = new();
 
     void Awake()
     {
         if (singleton == null) singleton = this;
         else Destroy(gameObject);
-    }
 
-    private void Start()
-    {
         rng = HashSeed(); // Do NOT use member 'rng' before this line. Required for PCG determinism!
+
         ClearWorld();
 
+        ChunkData current = database.chunks[rng.Next(0, database.chunks.Count - 1)];
         Vector3Int origin = new Vector3Int(0, 0, 0);
-        foreach (ChunkData chunk in database.chunks)
+        BuildChunk(current, origin);
+
+        for (int i = 0; i < 10; i++)
         {
-            BuildChunk(chunk, origin);
-
-            origin.x += CHUNK_WIDTH;
-            origin.y += CHUNK_HEIGHT;
+            (current, origin) = FindNextChunk(current, origin);
+            BuildChunk(current, origin);
         }
-
+        
         SpawnPlayer();
     }
 
@@ -70,6 +50,10 @@ public class WorldGenerator : MonoBehaviour
         Debug.Log("Baking...");
 
         database.chunks.Clear();
+
+        tilemap.RefreshAllTiles();
+        tilemap.CompressBounds();
+
         SerializeChunks();
 
         Debug.Log($"Baking completed, found {database.chunks.Count} chunks!");
@@ -111,13 +95,13 @@ public class WorldGenerator : MonoBehaviour
                 {
                     if (bounds.Contains(obj.transform.position))
                     {
-                        GameObject prefab = null;
+                        GameObject prefabAsset = null;
 
                         #if UNITY_EDITOR
-                        prefab = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(obj);
+                        prefabAsset = UnityEditor.PrefabUtility.GetCorrespondingObjectFromSource(obj);
                         #endif
 
-                        if (prefab == null)
+                        if (prefabAsset == null)
                         {
                             Debug.LogError($"ERROR: {obj.name} MISSING PREFAB!");
                             continue;
@@ -125,7 +109,7 @@ public class WorldGenerator : MonoBehaviour
 
                         Vector3 localPos = obj.transform.position - origin;
 
-                        chunk.gameObjects.Add(new ObjectData { obj = prefab, pos = localPos });
+                        chunk.gameObjects.Add(new ObjectData { prefab = prefabAsset, localPosition = localPos });
                     }
                 }
 
@@ -142,6 +126,14 @@ public class WorldGenerator : MonoBehaviour
                         chunk.tilemap.Add(new TileData { tile = tilemap.GetTile(pos) });
                         chunk.background.Add(new TileData { tile = background.GetTile(pos) });
                         chunk.foreground.Add(new TileData { tile = foreground.GetTile(pos) });
+
+                        if (tilemap.GetTile(pos) == null)
+                        {
+                            if (y == 0 && x > 0 && x < CHUNK_WIDTH - 1)                 chunk.bottomConnections.Add(x);
+                            if (y == CHUNK_HEIGHT - 1 && x > 0 && x < CHUNK_WIDTH - 1)  chunk.topConnections.Add(x);
+                            if (x == 0 && y > 0 && y < CHUNK_HEIGHT - 1)                chunk.leftConnections.Add(y);
+                            if (x == CHUNK_WIDTH - 1 && y > 0 && y < CHUNK_HEIGHT - 1)  chunk.rightConnections.Add(y);
+                        }
                     }
                 }
 
@@ -208,8 +200,63 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    private (ChunkData chunk, Vector3Int position) FindNextChunk(ChunkData current, Vector3Int origin)
+    {
+        List<(ChunkData candidate, Vector3Int position)> candidates = new();
+        ChunkData candidate;
+
+        for (int i = 0; i < 100; i++)
+        {
+            candidate = database.chunks[rng.Next(0, database.chunks.Count - 1)];
+
+            if (current.rightConnections.Intersect(candidate.leftConnections).Any())
+            {
+                Vector3Int pos = new Vector3Int(CHUNK_WIDTH, 0) + origin;
+
+                if (!occupied.Contains(pos))
+                {
+                    candidates.Add((candidate, pos));
+                }
+            }
+
+            if (current.leftConnections.Intersect(candidate.rightConnections).Any())
+            {
+                Vector3Int pos = new Vector3Int(-CHUNK_WIDTH, 0) + origin;
+
+                if (!occupied.Contains(pos))
+                {
+                    candidates.Add((candidate, pos));
+                }
+            }
+
+            if (current.bottomConnections.Intersect(candidate.topConnections).Any())
+            {
+                Vector3Int pos = new Vector3Int(0, -CHUNK_HEIGHT) + origin;
+
+                if (!occupied.Contains(pos))
+                {
+                    candidates.Add((candidate, pos));
+                }
+            }
+
+            if (current.topConnections.Intersect(candidate.bottomConnections).Any())
+            {
+                Vector3Int pos = new Vector3Int(0, CHUNK_HEIGHT) + origin;
+
+                if (!occupied.Contains(pos))
+                {
+                    candidates.Add((candidate, pos));
+                }
+            }
+        }
+
+        return candidates[rng.Next(0, candidates.Count - 1)];
+    }
+
     private void BuildChunk(ChunkData chunk, Vector3Int origin)
     {
+        occupied.Add(origin);
+
         int i = 0;
 
         for (int y = 0; y < CHUNK_HEIGHT; y++)
@@ -228,7 +275,7 @@ public class WorldGenerator : MonoBehaviour
 
         foreach (ObjectData objectData in chunk.gameObjects)
         {
-            Instantiate(objectData.obj, objectData.pos, Quaternion.identity);
+            Instantiate(objectData.prefab, objectData.localPosition + origin, Quaternion.identity);
         }
     }
 

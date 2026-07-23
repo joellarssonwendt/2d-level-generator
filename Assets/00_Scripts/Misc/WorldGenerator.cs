@@ -281,6 +281,23 @@ public class WorldGenerator : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        // if (space above and ground below) Instantiate(playerPrefab, new Vector3(x + 0.5f, y, 0), Quaternion.identity);
+        Vector3Int position = new Vector3Int(0, 0, 0);
+        Vector3Int below = new Vector3Int(0, -1, 0);
+
+        for (int y = 0; y < CHUNK_HEIGHT; y++)
+        {
+            position.y = y;
+
+            for (int x = 0; x < CHUNK_WIDTH; x++)
+            {
+                position.x = x;
+
+                if (tilemap.GetTile(position) == null && tilemap.GetTile(position + below) != null)
+                {
+                    Instantiate(playerPrefab, new Vector3(x + 0.5f, y, 0), Quaternion.identity);
+                    return;
+                }
+            }
+        }
     }
 }

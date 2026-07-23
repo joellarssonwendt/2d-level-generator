@@ -3,17 +3,34 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
-public class ChunkData
+public class TileData
 {
-    public List<TileBase> tilemap = new();
-    public List<TileBase> background = new();
-    public List<TileBase> foreground = new();
-    public Dictionary<Vector3, GameObject> gameObjects = new();
+    public TileBase tile;
 }
 
-public class LevelGenerator : MonoBehaviour
+[System.Serializable]
+public class ObjectData
 {
-    private static LevelGenerator singleton;
+    public GameObject obj;
+    public Vector3 pos;
+}
+
+[System.Serializable]
+public class ChunkData
+{
+    public List<TileData> tilemap = new();
+    public List<TileData> background = new();
+    public List<TileData> foreground = new();
+    public List<ObjectData> gameObjects = new();
+}
+
+public class WorldGenerator : MonoBehaviour
+{
+    private static readonly int CHUNK_WIDTH = 30;
+    private static readonly int CHUNK_HEIGHT = 20;
+    private static readonly string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
+
+    private static WorldGenerator singleton;
 
     [Header("World Seed")]
     [SerializeField] private string seedString = "";
@@ -29,39 +46,50 @@ public class LevelGenerator : MonoBehaviour
     {
         if (singleton == null) singleton = this;
         else Destroy(gameObject);
+    }
 
+    private void Start()
+    {
         rng = HashSeed(); // Do NOT use member 'rng' before this line. Required for PCG determinism!
+        ClearWorld();
+
+        Vector3Int origin = new Vector3Int(0, 0, 0);
+        foreach (ChunkData chunk in database.chunks)
+        {
+            BuildChunk(chunk, origin);
+
+            origin.x += CHUNK_WIDTH;
+            origin.y += CHUNK_HEIGHT;
+        }
+
         SpawnPlayer();
     }
 
     public void Bake()
     {
-        Debug.Log("LevelGenerator.cs | Baking...");
+        Debug.Log("Baking...");
 
         database.chunks.Clear();
         SerializeChunks();
 
-        Debug.Log($"LevelGenerator.cs | Baking completed, found {database.chunks.Count} chunks!");
+        Debug.Log($"Baking completed, found {database.chunks.Count} chunks!");
     }
 
     private void SerializeChunks()
     {
-        int width = 30;
-        int height = 20;
-
         Debug.Assert(
             tilemap.cellBounds.xMin == 0 && tilemap.cellBounds.yMin == 0,
             "ERROR: Tilemap must start at (0,0)!"
         );
 
         Debug.Assert(
-            tilemap.cellBounds.size.x % width == 0 &&
-            tilemap.cellBounds.size.y % height == 0,
+            tilemap.cellBounds.size.x % CHUNK_WIDTH == 0 &&
+            tilemap.cellBounds.size.y % CHUNK_HEIGHT == 0,
             "ERROR: World size must be divisible by chunk size!"
         );
 
-        int chunksX = tilemap.cellBounds.size.x / width;
-        int chunksY = tilemap.cellBounds.size.y / height;
+        int chunksX = tilemap.cellBounds.size.x / CHUNK_WIDTH;
+        int chunksY = tilemap.cellBounds.size.y / CHUNK_HEIGHT;
 
         for (int i = 0; i < chunksY; i++)
         {
@@ -69,10 +97,8 @@ public class LevelGenerator : MonoBehaviour
             {
                 ChunkData chunk = new();
 
-                Vector3 origin = new Vector3(j * width, i * height, 0);
-                Bounds bounds = new Bounds(new Vector3(origin.x + width / 2, origin.y + height / 2, 0), new Vector3(width, height, 1f));
-
-                string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
+                Vector3Int origin = new Vector3Int(j * CHUNK_WIDTH, i * CHUNK_HEIGHT, 0);
+                Bounds bounds = new Bounds(new Vector3(origin.x + CHUNK_WIDTH / 2, origin.y + CHUNK_HEIGHT / 2, 0), new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, 1f));
 
                 List<GameObject> objects = new();
 
@@ -99,23 +125,23 @@ public class LevelGenerator : MonoBehaviour
 
                         Vector3 localPos = obj.transform.position - origin;
 
-                        chunk.gameObjects.Add(localPos, prefab);
+                        chunk.gameObjects.Add(new ObjectData { obj = prefab, pos = localPos });
                     }
                 }
 
                 Vector3Int pos = new();
 
-                for (int y = 0; y < height; y++)
+                for (int y = 0; y < CHUNK_HEIGHT; y++)
                 {
-                    pos.y = (int)origin.y + y;
+                    pos.y = origin.y + y;
 
-                    for (int x = 0; x < width; x++)
+                    for (int x = 0; x < CHUNK_WIDTH; x++)
                     {
-                        pos.x = (int)origin.x + x;
+                        pos.x = origin.x + x;
 
-                        chunk.tilemap.Add(tilemap.GetTile(pos));
-                        chunk.background.Add(background.GetTile(pos));
-                        chunk.foreground.Add(foreground.GetTile(pos));
+                        chunk.tilemap.Add(new TileData { tile = tilemap.GetTile(pos) });
+                        chunk.background.Add(new TileData { tile = background.GetTile(pos) });
+                        chunk.foreground.Add(new TileData { tile = foreground.GetTile(pos) });
                     }
                 }
 
@@ -160,6 +186,50 @@ public class LevelGenerator : MonoBehaviour
 
         //Debug.Log($"Internal seed: {seed}");
         return new System.Random(seed);
+    }
+
+    private void ClearWorld()
+    {
+        tilemap.ClearAllTiles();
+        background.ClearAllTiles();
+        foreground.ClearAllTiles();
+
+        List<GameObject> objects = new();
+
+        foreach (string tag in tags)
+        {
+            objects.AddRange(GameObject.FindGameObjectsWithTag(tag));
+        }
+
+        foreach (GameObject obj in objects)
+        {
+            obj.SetActive(false);
+            Destroy(obj);
+        }
+    }
+
+    private void BuildChunk(ChunkData chunk, Vector3Int origin)
+    {
+        int i = 0;
+
+        for (int y = 0; y < CHUNK_HEIGHT; y++)
+        {
+            for (int x = 0; x < CHUNK_WIDTH; x++)
+            {
+                Vector3Int pos = new Vector3Int(x, y);
+
+                tilemap.SetTile(origin + pos, chunk.tilemap[i].tile);
+                background.SetTile(origin + pos, chunk.background[i].tile);
+                foreground.SetTile(origin + pos, chunk.foreground[i].tile);
+
+                i++;
+            }
+        }
+
+        foreach (ObjectData objectData in chunk.gameObjects)
+        {
+            Instantiate(objectData.obj, objectData.pos, Quaternion.identity);
+        }
     }
 
     private void SpawnPlayer()

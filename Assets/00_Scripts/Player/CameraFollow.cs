@@ -6,15 +6,8 @@ public class CameraFollow : MonoBehaviour
 
     void Awake()
     {
-        if (CameraFollow.Singleton != null && CameraFollow.Singleton != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        else
-        {
-            CameraFollow.Singleton = this;
-        }
+        if (Singleton == null) Singleton = this;
+        else Destroy(gameObject);
     }
 
     [SerializeField] private Vector3 offset = new Vector3(0, 0, -10.0f);
@@ -40,7 +33,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!bFollowing)
+        if (target == null || !bFollowing)
         {
             return;
         }

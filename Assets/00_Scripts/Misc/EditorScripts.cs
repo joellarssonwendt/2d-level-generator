@@ -1,20 +1,20 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(LevelGenerator))]
+[CustomEditor(typeof(WorldGenerator))]
 public class EditorScripts : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        LevelGenerator levelGenerator = (LevelGenerator)target;
+        WorldGenerator worldGen = (WorldGenerator)target;
 
         GUILayout.Space(10);
 
         if (GUILayout.Button("Bake"))
         {
-            levelGenerator.Bake();
+            worldGen.Bake();
         }
     }
 }

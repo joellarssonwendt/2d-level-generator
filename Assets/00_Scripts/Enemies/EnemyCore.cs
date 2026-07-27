@@ -36,7 +36,7 @@ public class EnemyCore : MonoBehaviour
     [SerializeField] private AudioClip[] hurtSFX;
     [SerializeField] private AudioClip[] deathSFX;
 
-    void Start()
+    void Awake()
     {
         HP = maxHP;
 
@@ -68,6 +68,13 @@ public class EnemyCore : MonoBehaviour
             Debug.LogError("EnemyCore.rigidbody2d MISSING FROM " + gameObject.name);
         }
 
+        shaderGUItext = Shader.Find("GUI/Text Shader");
+        defaultSpriteShader = Shader.Find("Sprites/Default");
+        defaultColor = spriteRenderer.color;
+    }
+
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
 
         if (player == null)
@@ -81,10 +88,6 @@ public class EnemyCore : MonoBehaviour
         {
             Debug.LogError("EnemyCore.playerController MISSING FROM " + gameObject.name);
         }
-
-        shaderGUItext = Shader.Find("GUI/Text Shader");
-        defaultSpriteShader = Shader.Find("Sprites/Default");
-        defaultColor = spriteRenderer.color;
     }
 
     void FixedUpdate()

@@ -32,7 +32,7 @@ public class Spikes : MonoBehaviour
             Debug.LogError("Spikes.spriteRenderer MISSING FROM " + gameObject.name);
         }
 
-        if (Random.value > 0.5f)
+        if (WorldGenerator.GetRNG().NextDouble() > 0.5)
         {
             spriteRenderer.flipX = true;
         }

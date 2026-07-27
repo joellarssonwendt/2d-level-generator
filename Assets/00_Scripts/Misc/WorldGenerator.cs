@@ -45,6 +45,8 @@ public class WorldGenerator : MonoBehaviour
         SpawnPlayer();
     }
 
+    public static System.Random GetRNG() { return singleton.rng; }
+
     public void Bake()
     {
         #if UNITY_EDITOR

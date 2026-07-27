@@ -32,7 +32,7 @@ public class FrogBehaviour : MonoBehaviour
 
     IEnumerator JumpRoutine()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(Random.Range(1.5f, 4.5f));
             
@@ -42,6 +42,8 @@ public class FrogBehaviour : MonoBehaviour
             }
 
             Jump();
+
+            yield return null;
         }
     }
 }

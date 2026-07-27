@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public static readonly int CHUNK_WIDTH = 10;
-    public static readonly int CHUNK_HEIGHT = 10;
+    public static readonly int CHUNK_WIDTH = 32;
+    public static readonly int CHUNK_HEIGHT = 18;
 
     private static readonly string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
 
@@ -47,31 +47,38 @@ public class WorldGenerator : MonoBehaviour
 
     public void Bake()
     {
-        Debug.Log("Baking...");
+        #if UNITY_EDITOR
+        var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
+        var clearMethod = logEntries.GetMethod("Clear");
+        clearMethod.Invoke(null, null);
+        #endif
+
+        Debug.Log("Rebuilding chunk database...");
 
         database.chunks.Clear();
 
         tilemap.RefreshAllTiles();
         tilemap.CompressBounds();
 
+        if (tilemap.cellBounds.xMin != 0 || tilemap.cellBounds.yMin != 0)
+        {
+            Debug.LogError("ERROR: Tilemap must start at (0,0)!");
+            return;
+        }
+
+        if (tilemap.cellBounds.size.x % CHUNK_WIDTH != 0 || tilemap.cellBounds.size.y % CHUNK_HEIGHT != 0)
+        {
+            Debug.LogError($"ERROR: Tilemap size must be divisible by chunk size ({CHUNK_WIDTH}x{CHUNK_HEIGHT})!");
+            return;
+        }
+
         SerializeChunks();
 
-        Debug.Log($"Baking completed, found {database.chunks.Count} chunks!");
+        Debug.Log($"Rebuild completed, found {database.chunks.Count} chunks!");
     }
 
     private void SerializeChunks()
-    {
-        Debug.Assert(
-            tilemap.cellBounds.xMin == 0 && tilemap.cellBounds.yMin == 0,
-            "ERROR: Tilemap must start at (0,0)!"
-        );
-
-        Debug.Assert(
-            tilemap.cellBounds.size.x % CHUNK_WIDTH == 0 &&
-            tilemap.cellBounds.size.y % CHUNK_HEIGHT == 0,
-            "ERROR: World size must be divisible by chunk size!"
-        );
-
+    {      
         int chunksX = tilemap.cellBounds.size.x / CHUNK_WIDTH;
         int chunksY = tilemap.cellBounds.size.y / CHUNK_HEIGHT;
 

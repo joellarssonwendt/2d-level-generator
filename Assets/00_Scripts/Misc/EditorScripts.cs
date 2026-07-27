@@ -13,7 +13,7 @@ public class WorldGenBakeButton : Editor
         GUILayout.Space(10);
 
         if (GUILayout.Button($"Rebuild Chunk Database ({WorldGenerator.CHUNK_WIDTH}x{WorldGenerator.CHUNK_HEIGHT})"))
-        {
+        {            
             worldGen.Bake();
         }
     }

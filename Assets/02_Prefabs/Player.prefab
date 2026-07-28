@@ -270,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 7672800267459301218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -307,7 +307,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 584457375f6f6ce4ea3947adbe122e02, type: 3}
   - {fileID: 8300000, guid: 2424a17a34f21544d811fca604ad3272, type: 3}
   - {fileID: 8300000, guid: aa4dc9020edf1f84fa9c0ce0ad162de4, type: 3}
-  attackHitsSFX: []
+  attackHitsSFX:
+  - {fileID: 8300000, guid: 1004d03a5979b9a4c844687a70ed4c35, type: 3}
   chargingMediumSFX: []
   chargingHeavySFX: []
   dodgeRollSFX:

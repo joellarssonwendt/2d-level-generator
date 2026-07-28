@@ -36,7 +36,7 @@ public class WorldGenerator : MonoBehaviour
         Vector3Int origin = new Vector3Int(0, 0, 0);
         BuildChunk(current, origin);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 0; i++)
         {
             (current, origin) = FindNextChunk(current, origin);
             BuildChunk(current, origin);

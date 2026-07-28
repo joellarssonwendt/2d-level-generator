@@ -160,7 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857b6d21ef478f64992d55d9d8aaea55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpecialEffect
-  SFX: []
+  SFX:
+  - {fileID: 8300000, guid: 9f448387f4cb00849a74c99179116c32, type: 3}
+  volume: 0.5
   lifetime: 1
 --- !u!1 &4752123965089196936
 GameObject:

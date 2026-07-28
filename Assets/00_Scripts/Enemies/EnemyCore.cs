@@ -8,6 +8,8 @@ public class EnemyCore : MonoBehaviour
 
     // Cache
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask hazardLayer;
     [SerializeField] private GameObject deathEffectPrefab;
     private Animator animator;
     private Collider2D myCollider;
@@ -32,10 +34,6 @@ public class EnemyCore : MonoBehaviour
     private Color defaultColor;
     private Color HPColor;
     [SerializeField] private Color bloodColor = new Color(103f / 255f, 0f, 0f, 1f);
-
-    // SFX
-    [SerializeField] private AudioClip[] hurtSFX;
-    [SerializeField] private AudioClip[] deathSFX;
 
     void Awake()
     {
@@ -102,19 +100,28 @@ public class EnemyCore : MonoBehaviour
         float distance = 0.2f;
         float angle = 0f;
 
-        RaycastHit2D hit = Physics2D.BoxCast(transform.position, myCollider.bounds.size, angle, Vector2.down, distance, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(myCollider.bounds.center, myCollider.bounds.size, angle, Vector2.down, distance, groundLayer);
 
         return hit;
     }
 
     public bool CheckIfWall()
     {
+        float angle = 0f;
         Vector2 direction = Vector2.right * transform.localScale.x;
-        float distance = myCollider.bounds.size.x * 0.66f;
+        float distance = myCollider.bounds.size.x * 0.3f;
 
-        RaycastHit2D hit = Physics2D.Raycast(myCollider.bounds.center, direction, distance, groundLayer);
+        LayerMask wallLayers = groundLayer | enemyLayer | hazardLayer;
 
-        return hit;
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(myCollider.bounds.center, myCollider.bounds.size * 0.8f, angle, direction, distance, wallLayers);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider != myCollider)
+                return true;
+        }
+
+        return false;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -187,21 +194,25 @@ public class EnemyCore : MonoBehaviour
     {
         if (debug == false) return;
 
+        Collider2D c = GetComponent<Collider2D>();
+        if (c == null) return;
+
         // Wall checker
         Gizmos.color = Color.green;
-        Vector3 from = GetComponent<Collider2D>().bounds.center;
-        Vector3 direction = Vector3.right * transform.localScale.x;
-        float distance = GetComponent<Collider2D>().bounds.size.x * 0.66f;
-        Vector3 to = from + direction * distance;
-        Gizmos.DrawLine(from, to);
+        float distance = c.bounds.size.x * 0.3f;
+        Vector2 size = c.bounds.size * 0.8f;
+        Vector2 origin = c.bounds.center;
+        Vector2 direction = Vector2.right * transform.localScale.x;
+        Vector2 endPosition = origin + direction * distance;
+        Gizmos.DrawWireCube(endPosition, size);
 
         // Grounded checker
         Gizmos.color = Color.yellow;
         float distance2 = 0.2f;
-        Vector2 size = GetComponent<Collider2D>().bounds.size;
-        Vector2 origin = GetComponent<Collider2D>().bounds.center;
+        Vector2 size2 = c.bounds.size;
+        Vector2 origin2 = c.bounds.center;
         Vector2 direction2 = Vector2.down;
-        Vector2 endPosition = origin + direction2 * distance2;
-        Gizmos.DrawWireCube(endPosition, size);
+        Vector2 endPosition2 = origin2 + direction2 * distance2;
+        Gizmos.DrawWireCube(endPosition2, size2);
     }
 }

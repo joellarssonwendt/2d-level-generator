@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   specialEffectPrefab: {fileID: 2984016750400340102, guid: 1f05c093ba4633e4f96a787b477e7ae5, type: 3}
+  launchSFX:
+  - {fileID: 8300000, guid: 80fb199289160234388fbc3c319ab74f, type: 3}
   player: {fileID: 0}
   playerController: {fileID: 0}
   contactDamage: 10

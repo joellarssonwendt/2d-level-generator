@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour
 {
     // Cache
     [SerializeField] private GameObject specialEffectPrefab;
+    [SerializeField] private AudioClip[] launchSFX;
     private Collider2D myCollider;
     private Rigidbody2D rigidbody2d;
     [HideInInspector] public GameObject player;
@@ -48,6 +49,8 @@ public class Projectile : MonoBehaviour
         }
 
         rigidbody2d.linearVelocity = Vector2.right * transform.localScale.x * moveSpeed;
+
+        AudioSourcePool.Play(launchSFX, 0.5f);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -55,7 +58,7 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject == player && contactDamage > 0f)
         {
             Destroy(gameObject);
-            Instantiate(specialEffectPrefab, collision.collider.ClosestPoint(myCollider.bounds.center), Quaternion.identity);
+            Instantiate(specialEffectPrefab, collision.collider.ClosestPoint(myCollider.bounds.center), Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
 
             playerController.TakeDamage(contactDamage, contactKnockback, gameObject);
         }
@@ -63,7 +66,7 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);
-            Instantiate(specialEffectPrefab, collision.collider.ClosestPoint(myCollider.bounds.center), Quaternion.identity);
+            Instantiate(specialEffectPrefab, collision.collider.ClosestPoint(myCollider.bounds.center), Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
         }
     }
 }

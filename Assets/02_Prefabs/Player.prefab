@@ -302,6 +302,7 @@ MonoBehaviour:
   hazardLayer:
     serializedVersion: 2
     m_Bits: 256
+  hitEffectPrefab: {fileID: 8676676653896824381, guid: 767537442e90dc040a9fa94d4f3693c8, type: 3}
   attackSwingsSFX:
   - {fileID: 8300000, guid: 584457375f6f6ce4ea3947adbe122e02, type: 3}
   - {fileID: 8300000, guid: 2424a17a34f21544d811fca604ad3272, type: 3}

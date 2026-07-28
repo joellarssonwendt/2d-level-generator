@@ -41,6 +41,8 @@ public class DrakeBehaviour : MonoBehaviour
 
     IEnumerator JumpRoutine()
     {
+        bool isGrounded = false;
+
         while (true)
         {
             int jumps = Random.Range(3, 6);
@@ -49,21 +51,30 @@ public class DrakeBehaviour : MonoBehaviour
             {
                 jumps--;
 
-                yield return new WaitUntil(enemyCore.CheckIfGrounded);
-                yield return new WaitForSeconds(1f);
+                while (!isGrounded)
+                {
+                    isGrounded = enemyCore.CheckIfGrounded();
+                    yield return new WaitForSeconds(0.33f);
+                }
+
+                yield return new WaitForSeconds(0.5f);
 
                 if (enemyCore.CheckIfWall())
                 {
                     transform.localScale = new Vector2(-transform.localScale.x, 1f);
                 }
 
-                Jump();                
-
-                yield return null;
+                Jump();
+                isGrounded = false;
             }
 
-            yield return new WaitUntil(enemyCore.CheckIfGrounded);
-            yield return new WaitForSeconds(1f);
+            while (!isGrounded)
+            {
+                isGrounded = enemyCore.CheckIfGrounded();
+                yield return new WaitForSeconds(0.33f);
+            }
+
+            yield return new WaitForSeconds(0.5f);
 
             if (enemyCore.CheckIfWall())
             {

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private LayerMask hazardLayer;
+    [SerializeField] private GameObject hitEffectPrefab;
     private Animator animator;
     private CapsuleCollider2D capsuleCollider;
     private InputSystem_Actions inputActions;
@@ -339,6 +340,7 @@ public class PlayerController : MonoBehaviour
         {
             if (attackArea[i].gameObject.CompareTag("Enemy"))
             {
+                Instantiate(hitEffectPrefab, attackArea[i].GetComponent<Collider2D>().ClosestPoint(transform.position + Vector3.up * 0.5f), Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
                 attackArea[i].gameObject.GetComponent<EnemyCore>().TakeDamage(attackPower * damageMultiplier, knockbackPower * knockbackMultiplier, gameObject);
             }
         }

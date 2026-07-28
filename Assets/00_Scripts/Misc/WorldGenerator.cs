@@ -49,6 +49,8 @@ public class WorldGenerator : MonoBehaviour
 
     public void Bake()
     {
+        Debug.Log("Rebuilding chunk database...");
+
         #if UNITY_EDITOR
         var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
         var clearMethod = logEntries.GetMethod("Clear");

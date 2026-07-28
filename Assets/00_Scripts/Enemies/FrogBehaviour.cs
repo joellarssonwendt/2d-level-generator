@@ -32,9 +32,17 @@ public class FrogBehaviour : MonoBehaviour
 
     IEnumerator JumpRoutine()
     {
+        bool isGrounded = false;
+
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(1.5f, 4.5f));
+            while (!isGrounded)
+            {
+                isGrounded = enemyCore.CheckIfGrounded();
+                yield return new WaitForSeconds(0.33f);
+            }
+
+            yield return new WaitForSeconds(Random.Range(1.2f, 4.2f));
             
             if (enemyCore.CheckIfWall())
             {
@@ -42,6 +50,7 @@ public class FrogBehaviour : MonoBehaviour
             }
 
             Jump();
+            isGrounded = false;
 
             yield return null;
         }

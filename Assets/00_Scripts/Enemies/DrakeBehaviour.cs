@@ -4,6 +4,7 @@ using UnityEngine;
 public class DrakeBehaviour : MonoBehaviour
 {
     // Cache
+    [SerializeField] private GameObject fireballPrefab;
     private EnemyCore enemyCore;
     private Animator animator;
 
@@ -71,7 +72,8 @@ public class DrakeBehaviour : MonoBehaviour
 
             animator.Play("Attack");
             yield return new WaitForSeconds(0.3f);
-            // Shoot fireball projectile
+            GameObject fireball = Instantiate(fireballPrefab, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+            fireball.transform.localScale = transform.localScale;
             yield return new WaitForSeconds(0.3f);
             animator.Play("Idle");
 

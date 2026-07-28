@@ -8,6 +8,7 @@ public class EnemyCore : MonoBehaviour
 
     // Cache
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject deathEffectPrefab;
     private Animator animator;
     private Collider2D myCollider;
     private SpriteRenderer spriteRenderer;
@@ -109,7 +110,7 @@ public class EnemyCore : MonoBehaviour
     public bool CheckIfWall()
     {
         Vector2 direction = Vector2.right * transform.localScale.x;
-        float distance = myCollider.bounds.size.x;
+        float distance = myCollider.bounds.size.x * 0.66f;
 
         RaycastHit2D hit = Physics2D.Raycast(myCollider.bounds.center, direction, distance, groundLayer);
 
@@ -124,7 +125,7 @@ public class EnemyCore : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage, float knockback, GameObject attacker)
+    public void TakeDamage(float damage, float knockback, GameObject source)
     {
         if (isDead) return;
         if (damage <= 0f || damage < armor) return;
@@ -136,17 +137,16 @@ public class EnemyCore : MonoBehaviour
             float knockbackX;
             float knockbackY = knockback;
 
-            if (transform.position.x > attacker.transform.position.x)
+            if (transform.position.x > source.transform.position.x)
             {
-                knockbackX = knockback / 2;
+                knockbackX = knockback / 2 - knockbackResistance;
+                transform.localScale = new Vector2(-1f, 1f);
             }
             else
             {
-                knockbackX = -knockback / 2;
+                knockbackX = -knockback / 2 + knockbackResistance;
+                transform.localScale = new Vector2(1f, 1f);
             }
-
-            knockbackY -= knockbackResistance;
-            knockbackX -= knockbackResistance;
 
             rigidbody2d.AddForce(new Vector2(knockbackX, knockbackY));
         }
@@ -179,9 +179,7 @@ public class EnemyCore : MonoBehaviour
 
     public void EnemyDeath()
     {
-        // Handle enemy death
-        // VFX
-        // SFX
+        Instantiate(deathEffectPrefab, myCollider.bounds.center, Quaternion.identity);
         Destroy(gameObject);
     }
 
@@ -193,7 +191,7 @@ public class EnemyCore : MonoBehaviour
         Gizmos.color = Color.green;
         Vector3 from = GetComponent<Collider2D>().bounds.center;
         Vector3 direction = Vector3.right * transform.localScale.x;
-        float distance = GetComponent<Collider2D>().bounds.size.x;
+        float distance = GetComponent<Collider2D>().bounds.size.x * 0.66f;
         Vector3 to = from + direction * distance;
         Gizmos.DrawLine(from, to);
 

@@ -463,7 +463,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage, float knockback, GameObject enemy)
+    public void TakeDamage(float damage, float knockback, GameObject source)
     {
         if (isDead) return;
 
@@ -479,7 +479,7 @@ public class PlayerController : MonoBehaviour
         float knockbackX;
         float knockbackY = knockback;
 
-        if (transform.position.x > enemy.transform.position.x)
+        if (transform.position.x > source.transform.position.x)
         {
             knockbackX = knockback / 2;
         }

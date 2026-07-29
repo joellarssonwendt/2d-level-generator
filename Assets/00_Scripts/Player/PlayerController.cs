@@ -99,24 +99,30 @@ public class PlayerController : MonoBehaviour
     private float heavyThreshold = 3.0f;
     private bool attackAnimationLocked = false;
 
-    void Start()
+    void Awake()
     {
+        inputActions = new InputSystem_Actions();
+
         HP = maxHP;
 
         animator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody2d = GetComponent<Rigidbody2D>();
+        rigidbody2d = GetComponent<Rigidbody2D>();        
+    }
 
+    void Start()
+    {
         defaultGravityScale = rigidbody2d.gravityScale;
         startingPosition = transform.position;
 
         shaderGUItext = Shader.Find("GUI/Text Shader");
         defaultSpriteShader = Shader.Find("Sprites/Default");
         defaultColor = spriteRenderer.color;
+    }
 
-        inputActions = new InputSystem_Actions();
-        inputActions.Player.Enable();
+    void OnEnable()
+    {        
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Jump.performed += OnJump;
@@ -124,6 +130,21 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Attack.performed += OnAttack;
         inputActions.Player.Attack.canceled += OnAttackRelease;
         inputActions.Player.DodgeRoll.performed += OnDodgeRoll;
+
+        inputActions.Enable();
+    }
+
+    void OnDisable()
+    {        
+        inputActions.Player.Move.performed -= OnMove;
+        inputActions.Player.Move.canceled -= OnMove;
+        inputActions.Player.Jump.performed -= OnJump;
+        inputActions.Player.Jump.canceled -= OnJumpCanceled;
+        inputActions.Player.Attack.performed -= OnAttack;
+        inputActions.Player.Attack.canceled -= OnAttackRelease;
+        inputActions.Player.DodgeRoll.performed -= OnDodgeRoll;
+
+        inputActions.Disable();
     }
 
     void Update()

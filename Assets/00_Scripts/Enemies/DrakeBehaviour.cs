@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class DrakeBehaviour : MonoBehaviour
+public class DrakeBehaviour : MonoBehaviour, IEnemyBehaviour
 {
     // Cache
     [SerializeField] private GameObject fireballPrefab;
     private EnemyCore enemyCore;
     private Animator animator;
+    private Coroutine coroutine;
 
     // Variables
     private float jumpPowerX = 125.0f;
@@ -27,11 +28,26 @@ public class DrakeBehaviour : MonoBehaviour
         {
             Debug.LogError("DrakeBehaviour.animator MISSING FROM " + gameObject.name);
         }
-
-        StartCoroutine(JumpRoutine());
     }
 
-    void Jump()
+    public void Cull(bool cull)
+    {
+        if (cull)
+        {
+            if (coroutine == null) return;
+
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+        else
+        {
+            if (coroutine != null) return;
+
+            coroutine = StartCoroutine(MyCoroutine());
+        }
+    }
+
+    private void Jump()
     {
         if (enemyCore.canAct && enemyCore.CheckIfGrounded())
         {
@@ -39,7 +55,7 @@ public class DrakeBehaviour : MonoBehaviour
         }
     }
 
-    IEnumerator JumpRoutine()
+    private IEnumerator MyCoroutine()
     {
         bool isGrounded = false;
 

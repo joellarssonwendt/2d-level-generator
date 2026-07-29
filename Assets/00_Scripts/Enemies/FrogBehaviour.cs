@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class FrogBehaviour : MonoBehaviour
+public class FrogBehaviour : MonoBehaviour, IEnemyBehaviour
 {
     // Cache
     private EnemyCore enemyCore;
+    private Coroutine coroutine;
 
     // Variables
     private float jumpPowerX = 200.0f;
@@ -18,11 +19,26 @@ public class FrogBehaviour : MonoBehaviour
         {
             Debug.LogError("FrogBehaviour.enemyCore MISSING FROM " + gameObject.name);
         }
-
-        StartCoroutine(JumpRoutine());
     }
 
-    void Jump()
+    public void Cull(bool cull)
+    {
+        if (cull)
+        {
+            if (coroutine == null) return;
+
+            StopCoroutine(coroutine);
+            coroutine = null;
+        }
+        else
+        {
+            if (coroutine != null) return;
+
+            coroutine = StartCoroutine(MyCoroutine());
+        }
+    }
+
+    private void Jump()
     {
         if (enemyCore.canAct && enemyCore.CheckIfGrounded())
         {
@@ -30,7 +46,7 @@ public class FrogBehaviour : MonoBehaviour
         }
     }
 
-    IEnumerator JumpRoutine()
+    private IEnumerator MyCoroutine()
     {
         bool isGrounded = false;
 

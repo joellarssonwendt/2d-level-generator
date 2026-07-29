@@ -1,6 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
+public interface IEnemyBehaviour
+{
+    public void Cull(bool cull);
+}
+
 public class EnemyCore : MonoBehaviour
 {
     // Debug
@@ -14,12 +19,14 @@ public class EnemyCore : MonoBehaviour
     private Animator animator;
     private Collider2D myCollider;
     private SpriteRenderer spriteRenderer;
+    private IEnemyBehaviour enemyBehaviour;
     [HideInInspector] public Rigidbody2D rigidbody2d;
     [HideInInspector] public GameObject player;
     [HideInInspector] public PlayerController playerController;
 
     // Variables
     [HideInInspector] public bool canAct = true;
+    private float cullTimer = 0f;
 
     // Hitpoints & Damage
     private bool isDead = false;
@@ -60,6 +67,13 @@ public class EnemyCore : MonoBehaviour
             Debug.LogError("EnemyCore.spriteRenderer MISSING FROM " + gameObject.name);
         }
 
+        enemyBehaviour = GetComponent<IEnemyBehaviour>();
+
+        if (enemyBehaviour == null)
+        {
+            Debug.LogError("EnemyCore.enemyBehaviour MISSING FROM " + gameObject.name);
+        }
+
         rigidbody2d = GetComponent<Rigidbody2D>();
 
         if (rigidbody2d == null)
@@ -86,6 +100,29 @@ public class EnemyCore : MonoBehaviour
         if (playerController == null)
         {
             Debug.LogError("EnemyCore.playerController MISSING FROM " + gameObject.name);
+        }
+    }
+
+    void OnBecameVisible()
+    {
+        cullTimer = 0f;
+        enemyBehaviour.Cull(false);
+    }
+
+    void OnBecameInvisible()
+    {
+        cullTimer = 5f;
+    }
+
+    void Update()
+    {
+        if (cullTimer <= 0) return;
+
+        cullTimer -= Time.deltaTime;
+
+        if (cullTimer <= 0)
+        {
+            enemyBehaviour.Cull(true);
         }
     }
 

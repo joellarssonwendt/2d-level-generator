@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    // Constants
+    private const float CULL_DISTANCE_SQUARED = 225; // 15^2
+
     // Cache
     [SerializeField] private GameObject specialEffectPrefab;
     [SerializeField] private AudioClip[] launchSFX;
@@ -9,6 +12,7 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     [HideInInspector] public GameObject player;
     [HideInInspector] public PlayerController playerController;
+    private Transform playerTransform;
 
     // Variables
     [SerializeField] private float contactDamage = 10f;
@@ -48,9 +52,19 @@ public class Projectile : MonoBehaviour
             Debug.LogError("Projectile.playerController MISSING FROM " + gameObject.name);
         }
 
+        playerTransform = player.transform;
         rigidbody2d.linearVelocity = Vector2.right * transform.localScale.x * moveSpeed;
-
         AudioSourcePool.Play(launchSFX, 0.5f);
+    }
+
+    void Update()
+    {
+        Debug.Log($"{Vector2.SqrMagnitude(playerTransform.position - transform.position)}");
+
+        if (Vector2.SqrMagnitude(playerTransform.position - transform.position) > CULL_DISTANCE_SQUARED)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

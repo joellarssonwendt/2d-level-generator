@@ -17,7 +17,7 @@ public class WorldGenerator : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private Tilemap tilemap, background, foreground;
+    [SerializeField] private Tilemap playground, background, foreground;
     [SerializeField] private ChunkDatabase database;
 
     private System.Random rng;
@@ -49,49 +49,70 @@ public class WorldGenerator : MonoBehaviour
 
     public void Bake()
     {
-        Debug.Log("REBUILDING CHUNK DATABASE...");
-
-        #if UNITY_EDITOR
-        var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
-        var clearMethod = logEntries.GetMethod("Clear");
-        clearMethod.Invoke(null, null);
-        #endif
-
-        Debug.Log("REBUILDING CHUNK DATABASE...");
+        ClearConsole();
+        Debug.Log("<color=green>REBUILDING CHUNK DATABASE...</color>");
 
         database.chunks.Clear();
 
-        tilemap.RefreshAllTiles();
-        tilemap.CompressBounds();
+        BoundsInt worldBounds = GetWorldBounds();
 
-        if (tilemap.cellBounds.xMin != 0 || tilemap.cellBounds.yMin != 0)
+        if (worldBounds.xMin != 0 || worldBounds.yMin != 0)
         {
-            Debug.LogError("ERROR: Tilemap must start at (0,0)!");
+            Debug.LogError("<color=red>ERROR: Tilemap must start at (0,0)!</color>");
             return;
         }
 
-        if (tilemap.cellBounds.size.x % CHUNK_WIDTH != 0 || tilemap.cellBounds.size.y % CHUNK_HEIGHT != 0)
+        if (worldBounds.size.x % CHUNK_WIDTH != 0 || worldBounds.size.y % CHUNK_HEIGHT != 0)
         {
-            Debug.LogError($"ERROR: Tilemap size must be divisible by chunk size ({CHUNK_WIDTH}x{CHUNK_HEIGHT})!");
+            Debug.LogError($"<color=red>ERROR: Tilemap size must be divisible by chunk size ({CHUNK_WIDTH}x{CHUNK_HEIGHT})!</color>");
             return;
         }
 
-        SerializeChunks();
+        SerializeChunks(worldBounds);
 
         #if UNITY_EDITOR
         UnityEditor.EditorUtility.SetDirty(database);
         UnityEditor.AssetDatabase.SaveAssets();
         UnityEditor.AssetDatabase.Refresh();
-#endif
+        #endif
 
         string plural = database.chunks.Count != 1 ? "s" : "";
-        Debug.Log($"REBUILD COMPLETED: Found {database.chunks.Count} chunk{plural}!");
+        Debug.Log($"<color=green>REBUILD COMPLETED: Found {database.chunks.Count} chunk{plural}!</color>");
     }
 
-    private void SerializeChunks()
+    private void ClearConsole()
+    {
+        #if UNITY_EDITOR
+        var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
+        var clearMethod = logEntries.GetMethod("Clear");
+        clearMethod.Invoke(null, null);
+        #endif
+    }
+
+    private BoundsInt GetWorldBounds()
+    {
+        playground.RefreshAllTiles();
+        playground.CompressBounds();
+        background.RefreshAllTiles();
+        background.CompressBounds();
+        foreground.RefreshAllTiles();
+        foreground.CompressBounds();
+
+        BoundsInt worldBounds = playground.cellBounds;
+
+        worldBounds.xMin = Mathf.Min(worldBounds.xMin, background.cellBounds.xMin, foreground.cellBounds.xMin);
+        worldBounds.yMin = Mathf.Min(worldBounds.yMin, background.cellBounds.yMin, foreground.cellBounds.yMin);
+
+        worldBounds.xMax = Mathf.Max(worldBounds.xMax, background.cellBounds.xMax, foreground.cellBounds.xMax);
+        worldBounds.yMax = Mathf.Max(worldBounds.yMax, background.cellBounds.yMax, foreground.cellBounds.yMax);
+
+        return worldBounds;
+    }
+
+    private void SerializeChunks(BoundsInt worldBounds)
     {      
-        int chunksX = tilemap.cellBounds.size.x / CHUNK_WIDTH;
-        int chunksY = tilemap.cellBounds.size.y / CHUNK_HEIGHT;
+        int chunksX = worldBounds.size.x / CHUNK_WIDTH;
+        int chunksY = worldBounds.size.y / CHUNK_HEIGHT;
 
         for (int i = 0; i < chunksY; i++)
         {
@@ -100,7 +121,7 @@ public class WorldGenerator : MonoBehaviour
                 ChunkData chunk = new();
 
                 Vector3Int origin = new Vector3Int(j * CHUNK_WIDTH, i * CHUNK_HEIGHT, 0);
-                Bounds bounds = new Bounds(new Vector3(origin.x + CHUNK_WIDTH / 2, origin.y + CHUNK_HEIGHT / 2, 0), new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, 1f));
+                Bounds chunkBounds = new Bounds(new Vector3(origin.x + CHUNK_WIDTH / 2, origin.y + CHUNK_HEIGHT / 2, 0), new Vector3(CHUNK_WIDTH, CHUNK_HEIGHT, 1f));
 
                 List<GameObject> objects = new();
 
@@ -111,7 +132,7 @@ public class WorldGenerator : MonoBehaviour
 
                 foreach (GameObject obj in objects)
                 {
-                    if (bounds.Contains(obj.transform.position))
+                    if (chunkBounds.Contains(obj.transform.position))
                     {
                         GameObject prefabAsset = null;
 
@@ -141,11 +162,11 @@ public class WorldGenerator : MonoBehaviour
                     {
                         pos.x = origin.x + x;
 
-                        chunk.tilemap.Add(new TileData { tile = tilemap.GetTile(pos) });
+                        chunk.playground.Add(new TileData { tile = playground.GetTile(pos) });
                         chunk.background.Add(new TileData { tile = background.GetTile(pos) });
                         chunk.foreground.Add(new TileData { tile = foreground.GetTile(pos) });
 
-                        if (tilemap.GetTile(pos) == null)
+                        if (playground.GetTile(pos) == null)
                         {
                             if (y == 0 && x > 0 && x < CHUNK_WIDTH - 1)                 chunk.bottomConnections.Add(x);
                             if (y == CHUNK_HEIGHT - 1 && x > 0 && x < CHUNK_WIDTH - 1)  chunk.topConnections.Add(x);
@@ -200,7 +221,7 @@ public class WorldGenerator : MonoBehaviour
 
     private void ClearWorld()
     {
-        tilemap.ClearAllTiles();
+        playground.ClearAllTiles();
         background.ClearAllTiles();
         foreground.ClearAllTiles();
 
@@ -283,7 +304,7 @@ public class WorldGenerator : MonoBehaviour
             {
                 Vector3Int pos = new Vector3Int(x, y);
 
-                tilemap.SetTile(origin + pos, chunk.tilemap[i].tile);
+                playground.SetTile(origin + pos, chunk.playground[i].tile);
                 background.SetTile(origin + pos, chunk.background[i].tile);
                 foreground.SetTile(origin + pos, chunk.foreground[i].tile);
 
@@ -310,7 +331,7 @@ public class WorldGenerator : MonoBehaviour
             {
                 position.x = x;
 
-                if (tilemap.GetTile(position) == null && tilemap.GetTile(position + below) != null)
+                if (playground.GetTile(position) == null && playground.GetTile(position + below) != null)
                 {
                     Instantiate(playerPrefab, new Vector3(x + 0.5f, y, 0), Quaternion.identity);
                     return;

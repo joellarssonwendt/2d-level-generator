@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChunkDatabase
   m_EditorClassIdentifier: Assembly-CSharp::ChunkDatabase
   chunks:
-  - tilemap:
+  - playground:
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}

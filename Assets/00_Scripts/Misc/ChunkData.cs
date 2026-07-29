@@ -18,7 +18,7 @@ public class ObjectData
 [System.Serializable]
 public class ChunkData
 {
-    public List<TileData> tilemap = new();
+    public List<TileData> playground = new();
     public List<TileData> background = new();
     public List<TileData> foreground = new();
     public List<ObjectData> gameObjects = new();

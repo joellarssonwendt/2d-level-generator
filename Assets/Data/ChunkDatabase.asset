@@ -1745,10 +1745,10 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     gameObjects:
-    - prefab: {fileID: 2470296758901724854, guid: 22c82169c769aab4c8acd1019d35e09c, type: 3}
-      localPosition: {x: 30, y: 5, z: 0}
     - prefab: {fileID: 2763533565236198201, guid: 3c574bea514962f46a1d0df4c0c1fa8f, type: 3}
       localPosition: {x: 17, y: 3, z: 0}
+    - prefab: {fileID: 2470296758901724854, guid: 22c82169c769aab4c8acd1019d35e09c, type: 3}
+      localPosition: {x: 30, y: 5, z: 0}
     topConnections: 
     bottomConnections: 
     leftConnections: 

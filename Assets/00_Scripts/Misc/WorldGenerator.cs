@@ -49,7 +49,7 @@ public class WorldGenerator : MonoBehaviour
 
     public void Bake()
     {
-        Debug.Log("Rebuilding chunk database...");
+        Debug.Log("REBUILDING CHUNK DATABASE...");
 
         #if UNITY_EDITOR
         var logEntries = System.Type.GetType("UnityEditor.LogEntries, UnityEditor.dll");
@@ -57,7 +57,7 @@ public class WorldGenerator : MonoBehaviour
         clearMethod.Invoke(null, null);
         #endif
 
-        Debug.Log("Rebuilding chunk database...");
+        Debug.Log("REBUILDING CHUNK DATABASE...");
 
         database.chunks.Clear();
 
@@ -82,9 +82,10 @@ public class WorldGenerator : MonoBehaviour
         UnityEditor.EditorUtility.SetDirty(database);
         UnityEditor.AssetDatabase.SaveAssets();
         UnityEditor.AssetDatabase.Refresh();
-        #endif
+#endif
 
-        Debug.Log($"Rebuild completed, found {database.chunks.Count} chunks!");
+        string plural = database.chunks.Count != 1 ? "s" : "";
+        Debug.Log($"REBUILD COMPLETED: Found {database.chunks.Count} chunk{plural}!");
     }
 
     private void SerializeChunks()

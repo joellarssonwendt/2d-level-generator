@@ -78,6 +78,12 @@ public class WorldGenerator : MonoBehaviour
 
         SerializeChunks();
 
+        #if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(database);
+        UnityEditor.AssetDatabase.SaveAssets();
+        UnityEditor.AssetDatabase.Refresh();
+        #endif
+
         Debug.Log($"Rebuild completed, found {database.chunks.Count} chunks!");
     }
 

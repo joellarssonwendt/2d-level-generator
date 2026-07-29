@@ -319,21 +319,25 @@ public class PlayerController : MonoBehaviour
     {
         Collider2D[] attackArea = null;
         Collider2D[] breakArea = null;
+        Vector3 hitPos = Vector3.zero;
 
         if (attackLabel.Equals("light"))
         {
             attackArea = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackAreaRadius, enemyLayer);
             breakArea = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackAreaRadius, hazardLayer);
+            hitPos = attackPoint.transform.position;
         }
         else if (attackLabel.Equals("medium"))
         {
             attackArea = Physics2D.OverlapCircleAll(heavyAttackPoint.transform.position, heavyAttackAreaRadius, enemyLayer);
             breakArea = Physics2D.OverlapCircleAll(heavyAttackPoint.transform.position, heavyAttackAreaRadius, hazardLayer);
+            hitPos = heavyAttackPoint.transform.position;
         }
         else if (attackLabel.Equals("heavy"))
         {
             attackArea = Physics2D.OverlapCircleAll(heavyAttackPoint.transform.position, heavyAttackAreaRadius, enemyLayer);
             breakArea = Physics2D.OverlapCircleAll(heavyAttackPoint.transform.position, heavyAttackAreaRadius, hazardLayer);
+            hitPos = heavyAttackPoint.transform.position;
         }
 
         for (int i = 0; i < attackArea.Length; i++)
@@ -341,7 +345,7 @@ public class PlayerController : MonoBehaviour
             if (attackArea[i].gameObject.CompareTag("Enemy"))
             {
                 AudioSourcePool.Play(attackHitsSFX, 0.66f);
-                Instantiate(hitEffectPrefab, attackArea[i].GetComponent<Collider2D>().ClosestPoint(transform.position + Vector3.up * 0.5f), Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
+                Instantiate(hitEffectPrefab, attackArea[i].GetComponent<Collider2D>().ClosestPoint(hitPos), Quaternion.Euler(0f, 0f, Random.Range(0f, 360f)));
                 attackArea[i].gameObject.GetComponent<EnemyCore>().TakeDamage(attackPower * damageMultiplier, knockbackPower * knockbackMultiplier, gameObject);
             }
         }

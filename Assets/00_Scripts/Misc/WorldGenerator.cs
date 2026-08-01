@@ -5,8 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public static readonly int CHUNK_WIDTH = 32;
-    public static readonly int CHUNK_HEIGHT = 18;
+    public static readonly int CHUNK_WIDTH = 16;
+    public static readonly int CHUNK_HEIGHT = 9;
 
     private static readonly string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
 
@@ -36,7 +36,7 @@ public class WorldGenerator : MonoBehaviour
         Vector3Int origin = new Vector3Int(0, 0, 0);
         BuildChunk(current, origin);
 
-        for (int i = 0; i < 0; i++)
+        for (int i = 0; i < 10; i++)
         {
             (current, origin) = FindNextChunk(current, origin);
             BuildChunk(current, origin);

@@ -8,9 +8,12 @@ public class WorldGenerator : MonoBehaviour
     public static readonly int CHUNK_WIDTH = 16;
     public static readonly int CHUNK_HEIGHT = 9;
 
-    private static readonly string[] tags = { "Enemy", "Hazard" }; // Make sure to add Pickup, etc. later!
+    private static readonly string[] tags = { "Enemy", "Hazard", "Decoration" }; // Make sure to add Pickup, etc. later!
 
     private static WorldGenerator singleton;
+
+    [Header("Settings")]
+    [SerializeField] private bool showChunkGrid = true;
 
     [Header("World Seed")]
     [SerializeField] private string seedString = "";
@@ -32,7 +35,7 @@ public class WorldGenerator : MonoBehaviour
 
         ClearWorld();
 
-        ChunkData current = database.chunks[rng.Next(0, database.chunks.Count - 1)];
+        ChunkData current = database.chunks[rng.Next(0, database.chunks.Count)];
         Vector3Int origin = new Vector3Int(0, 0, 0);
         BuildChunk(current, origin);
 
@@ -146,9 +149,11 @@ public class WorldGenerator : MonoBehaviour
                             continue;
                         }
 
-                        Vector3 localPos = obj.transform.position - origin;
+                        Vector3 localPosition = obj.transform.position - origin;
+                        Quaternion rotation = obj.transform.rotation;
+                        Vector3 scale = obj.transform.localScale;
 
-                        chunk.gameObjects.Add(new ObjectData { prefab = prefabAsset, localPosition = localPos });
+                        chunk.gameObjects.Add(new ObjectData(prefabAsset, localPosition, rotation, scale));
                     }
                 }
 
@@ -246,7 +251,7 @@ public class WorldGenerator : MonoBehaviour
 
         for (int i = 0; i < 100; i++)
         {
-            candidate = database.chunks[rng.Next(0, database.chunks.Count - 1)];
+            candidate = database.chunks[rng.Next(0, database.chunks.Count)];
 
             if (current.rightConnections.Intersect(candidate.leftConnections).Any())
             {
@@ -314,7 +319,8 @@ public class WorldGenerator : MonoBehaviour
 
         foreach (ObjectData objectData in chunk.gameObjects)
         {
-            Instantiate(objectData.prefab, objectData.localPosition + origin, Quaternion.identity);
+            GameObject instance = Instantiate(objectData.prefab, objectData.position + origin, objectData.rotation);
+            instance.transform.localScale = objectData.scale;
         }
     }
 
@@ -337,6 +343,25 @@ public class WorldGenerator : MonoBehaviour
                     return;
                 }
             }
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (!showChunkGrid) return;
+
+        Gizmos.color = Color.green;
+        int chunks = database.chunks.Count + 1;
+
+        for (int i = 0; i <= chunks; i++)
+        {
+            Vector3 from = new Vector3(i * CHUNK_WIDTH, 0, 0);
+            Vector3 to = new Vector3(i * CHUNK_WIDTH, chunks * CHUNK_HEIGHT, 0);
+            Gizmos.DrawLine(from, to);
+
+            from = new Vector3(0, i * CHUNK_HEIGHT, 0);
+            to = new Vector3(chunks * CHUNK_WIDTH, i * CHUNK_HEIGHT, 0);
+            Gizmos.DrawLine(from, to);
         }
     }
 }

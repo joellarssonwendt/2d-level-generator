@@ -12,7 +12,17 @@ public class TileData
 public class ObjectData
 {
     public GameObject prefab;
-    public Vector3 localPosition;
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+
+    public ObjectData(GameObject prefab, Vector3 position, Quaternion rotation, Vector3 scale)
+    {
+        this.prefab = prefab;
+        this.position = position;
+        this.rotation = rotation;
+        this.scale = scale;
+    }
 }
 
 [System.Serializable]

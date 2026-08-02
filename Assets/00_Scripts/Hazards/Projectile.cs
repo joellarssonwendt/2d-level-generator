@@ -59,7 +59,7 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        Debug.Log($"{Vector2.SqrMagnitude(playerTransform.position - transform.position)}");
+        //Debug.Log($"{Vector2.SqrMagnitude(playerTransform.position - transform.position)}");
 
         if (Vector2.SqrMagnitude(playerTransform.position - transform.position) > CULL_DISTANCE_SQUARED)
         {

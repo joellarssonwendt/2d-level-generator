@@ -93,23 +93,23 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
@@ -450,25 +450,35 @@ MonoBehaviour:
     - tile: {fileID: 0}
     gameObjects:
     - prefab: {fileID: 2763533565236198201, guid: 3c574bea514962f46a1d0df4c0c1fa8f, type: 3}
-      localPosition: {x: 13, y: 2, z: 0}
+      position: {x: 13, y: 2, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: -1, y: 1, z: 1}
+    - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
+      position: {x: 14.486939, y: 5.7790914, z: 0}
+      rotation: {x: -0, y: -0, z: -0.3746686, w: 0.9271588}
+      scale: {x: 1, y: 1, z: 1}
+    - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
+      position: {x: 14.16, y: 5.64, z: 0}
+      rotation: {x: -0, y: -0, z: 0.8061349, w: 0.5917319}
+      scale: {x: 1, y: 1, z: 1}
     topConnections: 0100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e000000
     bottomConnections: 
     leftConnections: 04000000050000000600000007000000
-    rightConnections: 0600000007000000
+    rightConnections: 04000000050000000600000007000000
   - playground:
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -892,16 +902,26 @@ MonoBehaviour:
     - tile: {fileID: 0}
     gameObjects:
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      localPosition: {x: 12, y: 1, z: 0}
+      position: {x: 12, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      localPosition: {x: 10, y: 1, z: 0}
+      position: {x: 8, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      localPosition: {x: 8, y: 1, z: 0}
+      position: {x: 10, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      localPosition: {x: 6, y: 1, z: 0}
+      position: {x: 6, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      localPosition: {x: 4, y: 1, z: 0}
+      position: {x: 4, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     topConnections: 
-    bottomConnections: 030000000400000005000000060000000700000008000000090000000a0000000b0000000c000000
+    bottomConnections: 
     leftConnections: 020000000300000004000000050000000600000007000000
     rightConnections: 020000000300000004000000050000000600000007000000

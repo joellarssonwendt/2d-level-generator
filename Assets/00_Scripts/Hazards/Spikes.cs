@@ -25,7 +25,7 @@ public class Spikes : MonoBehaviour
             Debug.LogError("Spikes.playerController MISSING FROM " + gameObject.name);
         }
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         if (spriteRenderer == null)
         {
@@ -38,7 +38,7 @@ public class Spikes : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == player && contactDamage > 0f)
         {

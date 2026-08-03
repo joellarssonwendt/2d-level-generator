@@ -320,6 +320,58 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: VisionOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: tvOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -4636,7 +4688,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: castle_of_bones_tileset-edited_196
+      name: spikes
       rect:
         serializedVersion: 2
         x: 528
@@ -16220,7 +16272,6 @@ TextureImporter:
       castle_of_bones_tileset-edited_193: 543586232
       castle_of_bones_tileset-edited_194: -1605281234
       castle_of_bones_tileset-edited_195: -1953442078
-      castle_of_bones_tileset-edited_196: -1636335168
       castle_of_bones_tileset-edited_20: -4856955202543926652
       castle_of_bones_tileset-edited_200: -750765127
       castle_of_bones_tileset-edited_201: 656484264
@@ -16807,6 +16858,7 @@ TextureImporter:
       castle_of_bones_tileset-edited_96: -678779423
       castle_of_bones_tileset-edited_97: 1831953694
       castle_of_bones_tileset-edited_98: -1636454633
+      spikes: -1636335168
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

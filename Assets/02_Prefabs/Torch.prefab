@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8043869359348205896}
   - component: {fileID: 7859452872849474910}
   m_Layer: 0
-  m_Name: Sprite
+  m_Name: Wood Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 4991074169976381378}
   - component: {fileID: 8577161018832239505}
   m_Layer: 0
-  m_Name: Animation
+  m_Name: Fire Animation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TorchSetup
   fireAnimation: {fileID: 4961827959081350887}
+  fireSprite: {fileID: 4991074169976381378}
 --- !u!1 &7464417639145856180
 GameObject:
   m_ObjectHideFlags: 0

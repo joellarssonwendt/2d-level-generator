@@ -8,6 +8,6 @@ public class TorchSetup : MonoBehaviour
     {
         fireAnimation.transform.rotation = Quaternion.Euler(0, 0, 270);
         GetComponentInChildren<Animator>().Play("Torch", 0, (float)WorldGenerator.GetRNG().NextDouble());
-        fireAnimation.GetComponent<SpriteRenderer>().flipX = WorldGenerator.GetRNG().NextDouble() > 0.5;
+        fireAnimation.GetComponent<SpriteRenderer>().flipY = WorldGenerator.GetRNG().NextDouble() > 0.5;
     }
 }

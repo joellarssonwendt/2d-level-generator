@@ -449,9 +449,17 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     gameObjects:
+    - prefab: {fileID: 2763533565236198201, guid: 3c574bea514962f46a1d0df4c0c1fa8f, type: 3}
+      position: {x: 13.939568, y: 1.3500986, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: -1, y: 1, z: 1}
     - prefab: {fileID: 4535211243463621096, guid: 3274a0e7e530b8b4ab5a67576faeb9a8, type: 3}
       position: {x: 2.5, y: 5, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
+      position: {x: 9.529622, y: 2.8095942, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
       position: {x: 12.69, y: 4.27, z: 0}
@@ -898,11 +906,11 @@ MonoBehaviour:
     - tile: {fileID: 0}
     gameObjects:
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      position: {x: 6, y: 2, z: 0}
+      position: {x: 8, y: 2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
-      position: {x: 8, y: 2, z: 0}
+      position: {x: 6, y: 2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
@@ -916,6 +924,10 @@ MonoBehaviour:
     - prefab: {fileID: 352673119527429827, guid: 7210544fd1df5144cb8102fe27f31816, type: 3}
       position: {x: 14, y: 2, z: 0}
       rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
+      position: {x: 14.32, y: 5.98, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     topConnections: 
     bottomConnections: 
@@ -1357,6 +1369,10 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     gameObjects:
+    - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
+      position: {x: 7.51, y: 4.17, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
       position: {x: 5.76, y: 3.6999998, z: 0}
       rotation: {x: -0, y: -0, z: -0.38706407, w: 0.92205286}
@@ -1801,6 +1817,10 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     gameObjects:
+    - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
+      position: {x: 7.7700005, y: 6.09, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
       position: {x: 8.147615, y: 4.675949, z: 0}
       rotation: {x: -0, y: -0, z: 0.14105085, w: 0.99000233}

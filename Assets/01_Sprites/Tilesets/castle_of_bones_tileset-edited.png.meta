@@ -6118,7 +6118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: castle_of_bones_tileset-edited_261
+      name: box
       rect:
         serializedVersion: 2
         x: 80
@@ -16177,6 +16177,7 @@ TextureImporter:
       7: -790735855
       8: 1031785206
       9: 3318929887028288156
+      box: 409051909
       castle_of_bones_tileset-edited_10: -2631298646164953562
       castle_of_bones_tileset-edited_100: 216775595
       castle_of_bones_tileset-edited_101: 1644569144
@@ -16333,7 +16334,6 @@ TextureImporter:
       castle_of_bones_tileset-edited_258: 857520742
       castle_of_bones_tileset-edited_259: 652340709
       castle_of_bones_tileset-edited_26: 2747122513539939786
-      castle_of_bones_tileset-edited_261: 409051909
       castle_of_bones_tileset-edited_262: 1976033555
       castle_of_bones_tileset-edited_263: 19430149
       castle_of_bones_tileset-edited_264: 1063062755

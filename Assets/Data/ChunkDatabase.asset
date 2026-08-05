@@ -458,12 +458,16 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
-      position: {x: 9.529622, y: 2.8095942, z: 0}
+      position: {x: 9.02, y: 2.8095942, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - prefab: {fileID: 5502094643189401961, guid: 07880df3d1afd7a4daf6775557531be1, type: 3}
       position: {x: 12.69, y: 4.27, z: 0}
       rotation: {x: -0, y: -0, z: -0.38771188, w: 0.9217807}
+      scale: {x: 1, y: 1, z: 1}
+    - prefab: {fileID: 3170832927658024599, guid: 3495dc35f1cd923499fa40b496c6ed75, type: 3}
+      position: {x: 10.2, y: 2.8095942, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     topConnections: 
     bottomConnections: 

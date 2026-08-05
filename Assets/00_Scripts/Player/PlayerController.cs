@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask hazardLayer;
     [SerializeField] private GameObject hitEffectPrefab;
     private Animator animator;
-    private CapsuleCollider2D capsuleCollider;
+    private BoxCollider2D boxCollider;
     private InputSystem_Actions inputActions;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigidbody2d;
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
         HP = maxHP;
 
         animator = GetComponent<Animator>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2d = GetComponent<Rigidbody2D>();        
     }
@@ -425,7 +425,7 @@ public class PlayerController : MonoBehaviour
         float distance = 0.2f;
         float angle = 0f;
 
-        RaycastHit2D hit = Physics2D.CapsuleCast(capsuleCollider.bounds.center, capsuleCollider.bounds.size, capsuleCollider.direction, angle, Vector2.down, distance, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, angle, Vector2.down, distance, groundLayer);
 
         return hit;
     }

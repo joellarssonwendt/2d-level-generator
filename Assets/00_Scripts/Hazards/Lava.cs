@@ -25,5 +25,10 @@ public class Lava : MonoBehaviour
                 enemy.EnemyDeath();
             }
         }
+
+        if (triggeringObject.CompareTag("Decoration"))
+        {
+            Destroy(triggeringObject, 1f);
+        }
     }
 }

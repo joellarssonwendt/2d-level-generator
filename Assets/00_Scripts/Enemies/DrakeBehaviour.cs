@@ -38,6 +38,8 @@ public class DrakeBehaviour : MonoBehaviour, IEnemyBehaviour
 
             StopCoroutine(coroutine);
             coroutine = null;
+
+            animator.Play("Idle");
         }
         else
         {

@@ -33,8 +33,8 @@ public class ChunkData
     public List<TileData> foreground = new();
     public List<ObjectData> gameObjects = new();
 
-    public List<int> topConnections = new();
-    public List<int> bottomConnections = new();
-    public List<int> leftConnections = new();
-    public List<int> rightConnections = new();
+    public List<int> upSockets = new();
+    public List<int> downSockets = new();
+    public List<int> leftSockets = new();
+    public List<int> rightSockets = new();
 }

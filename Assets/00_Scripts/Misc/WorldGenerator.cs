@@ -5,8 +5,56 @@ using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public static readonly int CHUNK_WIDTH = 16;
-    public static readonly int CHUNK_HEIGHT = 9;
+    private class Node
+    {
+        public readonly ChunkData chunkData;
+        public readonly Vector3Int position;
+        public Node up, down, left, right;
+
+        public Node(ChunkData chunkData, Vector3Int position)
+        {
+            this.chunkData = chunkData;
+            this.position = position;
+        }
+    }
+
+    private class Graph
+    {
+        private readonly Dictionary<Vector3Int, Node> nodes = new();
+
+        public void AddNode(Node node)
+        {
+            if (!nodes.TryAdd(node.position, node))
+            {
+                return;
+            }
+
+            node.up = nodes.TryGetValue(node.position + Vector3Int.up, out Node up) ? up : null;
+            if (node.up != null) node.up.down = node;
+
+            node.down = nodes.TryGetValue(node.position + Vector3Int.down, out Node down) ? down : null;
+            if (node.down != null) node.down.up = node;
+
+            node.left = nodes.TryGetValue(node.position + Vector3Int.left, out Node left) ? left : null;
+            if (node.left != null) node.left.right = node;
+
+            node.right = nodes.TryGetValue(node.position + Vector3Int.right, out Node right) ? right : null;
+            if (node.right != null) node.right.left = node;
+        }
+
+        public IEnumerable<Node> GetNodes()
+        {
+            return nodes.Values;
+        }
+
+        public bool IsOccupied(Vector3Int position)
+        {
+            return nodes.TryGetValue(position, out Node node);
+        }
+    }
+
+    public static readonly int CHUNK_WIDTH = 10;
+    public static readonly int CHUNK_HEIGHT = 10;
 
     private static readonly string[] tags = { "Enemy", "Hazard", "Decoration" }; // Make sure to add Pickup, etc. later!
 
@@ -24,7 +72,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private ChunkDatabase database;
 
     private System.Random rng;
-    private HashSet<Vector3Int> occupied = new();
+    private Graph graph = new();
 
     void Awake()
     {
@@ -34,17 +82,13 @@ public class WorldGenerator : MonoBehaviour
         rng = HashSeed(); // Do NOT use member 'rng' before this line. Required for PCG determinism!
 
         ClearWorld();
-
-        ChunkData current = database.chunks[rng.Next(0, database.chunks.Count)];
-        Vector3Int origin = new Vector3Int(0, 0, 0);
-        BuildChunk(current, origin);
-
-        for (int i = 0; i < 10; i++)
-        {
-            (current, origin) = FindNextChunk(current, origin);
-            BuildChunk(current, origin);
-        }
+        GenerateGraph();
         
+        foreach (Node node in graph.GetNodes())
+        {
+            BuildChunk(node.chunkData, node.position);
+        }
+
         SpawnPlayer();
     }
 
@@ -173,10 +217,10 @@ public class WorldGenerator : MonoBehaviour
 
                         if (playground.GetTile(pos) == null)
                         {
-                            if (y == 0 && x > 0 && x < CHUNK_WIDTH - 1)                 chunk.bottomConnections.Add(x);
-                            if (y == CHUNK_HEIGHT - 1 && x > 0 && x < CHUNK_WIDTH - 1)  chunk.topConnections.Add(x);
-                            if (x == 0 && y > 0 && y < CHUNK_HEIGHT - 1)                chunk.leftConnections.Add(y);
-                            if (x == CHUNK_WIDTH - 1 && y > 0 && y < CHUNK_HEIGHT - 1)  chunk.rightConnections.Add(y);
+                            if (y == 0 && x > 0 && x < CHUNK_WIDTH - 1)                 chunk.downSockets.Add(x);
+                            if (y == CHUNK_HEIGHT - 1 && x > 0 && x < CHUNK_WIDTH - 1)  chunk.upSockets.Add(x);
+                            if (x == 0 && y > 0 && y < CHUNK_HEIGHT - 1)                chunk.leftSockets.Add(y);
+                            if (x == CHUNK_WIDTH - 1 && y > 0 && y < CHUNK_HEIGHT - 1)  chunk.rightSockets.Add(y);
                         }
                     }
                 }
@@ -244,62 +288,89 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
-    private (ChunkData chunk, Vector3Int position) FindNextChunk(ChunkData current, Vector3Int origin)
+    private void GenerateGraph()
     {
-        List<(ChunkData candidate, Vector3Int position)> candidates = new();
-        ChunkData candidate;
+        graph.AddNode(new Node(database.chunks[rng.Next(0, database.chunks.Count)], Vector3Int.zero));
+
+        for (int i = 0; i < 5; i++)
+        {
+            List<Node> newNodes = new();
+
+            foreach (Node node in graph.GetNodes())
+            {
+                Node next = null;
+
+                if (node.up == null) next = FindNextNode(node, Vector3Int.up);
+                if (next != null) newNodes.Add(next);
+
+                if (node.down == null) next = FindNextNode(node, Vector3Int.down);
+                if (next != null) newNodes.Add(next);
+
+                if (node.left == null) next = FindNextNode(node, Vector3Int.left);
+                if (next != null) newNodes.Add(next);
+
+                if (node.right == null) next = FindNextNode(node, Vector3Int.right);
+                if (next != null) newNodes.Add(next);
+            }
+
+            foreach (Node node in newNodes)
+            {
+                graph.AddNode(node);
+            }
+        }
+    }
+
+    private Node FindNextNode(Node node, Vector3Int direction)
+    {
+        List<Node> candidates = new();
+        Vector3Int position = node.position + direction;
+
+        if (graph.IsOccupied(position)) return null;
 
         for (int i = 0; i < 100; i++)
         {
-            candidate = database.chunks[rng.Next(0, database.chunks.Count)];
+            ChunkData chunkData = database.chunks[rng.Next(0, database.chunks.Count)];
 
-            if (current.rightConnections.Intersect(candidate.leftConnections).Any())
+            if (direction == Vector3Int.up)
             {
-                Vector3Int pos = new Vector3Int(CHUNK_WIDTH, 0) + origin;
-
-                if (!occupied.Contains(pos))
+                if (node.chunkData.upSockets.Intersect(chunkData.downSockets).Any())
                 {
-                    candidates.Add((candidate, pos));
+                    candidates.Add(new Node(chunkData, position));
                 }
             }
 
-            if (current.leftConnections.Intersect(candidate.rightConnections).Any())
+            if (direction == Vector3Int.down)
             {
-                Vector3Int pos = new Vector3Int(-CHUNK_WIDTH, 0) + origin;
-
-                if (!occupied.Contains(pos))
+                if (node.chunkData.downSockets.Intersect(chunkData.upSockets).Any())
                 {
-                    candidates.Add((candidate, pos));
+                    candidates.Add(new Node(chunkData, position));
                 }
             }
 
-            if (current.bottomConnections.Intersect(candidate.topConnections).Any())
+            if (direction == Vector3Int.left)
             {
-                Vector3Int pos = new Vector3Int(0, -CHUNK_HEIGHT) + origin;
-
-                if (!occupied.Contains(pos))
+                if (node.chunkData.leftSockets.Intersect(chunkData.rightSockets).Any())
                 {
-                    candidates.Add((candidate, pos));
+                    candidates.Add(new Node(chunkData, position));
                 }
             }
 
-            if (current.topConnections.Intersect(candidate.bottomConnections).Any())
+            if (direction == Vector3Int.right)
             {
-                Vector3Int pos = new Vector3Int(0, CHUNK_HEIGHT) + origin;
-
-                if (!occupied.Contains(pos))
+                if (node.chunkData.rightSockets.Intersect(chunkData.leftSockets).Any())
                 {
-                    candidates.Add((candidate, pos));
+                    candidates.Add(new Node(chunkData, position));
                 }
             }
         }
 
-        return candidates[rng.Next(0, candidates.Count - 1)];
+        if (candidates.Count > 0) return candidates[rng.Next(0, candidates.Count)];
+        else return null;
     }
 
-    private void BuildChunk(ChunkData chunk, Vector3Int origin)
+    private void BuildChunk(ChunkData chunk, Vector3Int chunkPosition)
     {
-        occupied.Add(origin);
+        Vector3Int actualPosition = new Vector3Int(chunkPosition.x * CHUNK_WIDTH, chunkPosition.y * CHUNK_HEIGHT, 0);
 
         int i = 0;
 
@@ -307,11 +378,11 @@ public class WorldGenerator : MonoBehaviour
         {
             for (int x = 0; x < CHUNK_WIDTH; x++)
             {
-                Vector3Int pos = new Vector3Int(x, y);
+                Vector3Int tilePosition = new Vector3Int(x, y);
 
-                playground.SetTile(origin + pos, chunk.playground[i].tile);
-                background.SetTile(origin + pos, chunk.background[i].tile);
-                foreground.SetTile(origin + pos, chunk.foreground[i].tile);
+                playground.SetTile(actualPosition + tilePosition, chunk.playground[i].tile);
+                background.SetTile(actualPosition + tilePosition, chunk.background[i].tile);
+                foreground.SetTile(actualPosition + tilePosition, chunk.foreground[i].tile);
 
                 i++;
             }
@@ -319,7 +390,7 @@ public class WorldGenerator : MonoBehaviour
 
         foreach (ObjectData objectData in chunk.gameObjects)
         {
-            GameObject instance = Instantiate(objectData.prefab, objectData.position + origin, objectData.rotation);
+            GameObject instance = Instantiate(objectData.prefab, objectData.position + actualPosition, objectData.rotation);
             instance.transform.localScale = objectData.scale;
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 public class WorldGenerator : MonoBehaviour
@@ -70,6 +71,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Tilemap playground, background, foreground;
     [SerializeField] private ChunkDatabase database;
+    [SerializeField] private Light2D globalLight;
 
     private System.Random rng;
     private Graph graph = new();
@@ -90,6 +92,8 @@ public class WorldGenerator : MonoBehaviour
         }
 
         SpawnPlayer();
+
+        globalLight.intensity = 0.5f;
     }
 
     public static System.Random GetRNG() { return singleton.rng; }

@@ -22,17 +22,8 @@ MonoBehaviour:
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
-    - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -42,21 +33,21 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
@@ -80,7 +71,6 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
-    - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -89,8 +79,8 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -98,6 +88,16 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 57e3b6be795b03549a38b01ab492335f, type: 2}
+    - tile: {fileID: 11400000, guid: 70d531a55b6f4614cbbcdd5b4fe00f4b, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -322,7 +322,7 @@ MonoBehaviour:
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     upSockets: 010000000200000003000000
-    downSockets: 060000000700000008000000
+    downSockets: 0600000007000000
     leftSockets: 
     rightSockets: 
   - playground:
@@ -691,10 +691,10 @@ MonoBehaviour:
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
-    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 57e3b6be795b03549a38b01ab492335f, type: 2}
+    - tile: {fileID: 11400000, guid: 70d531a55b6f4614cbbcdd5b4fe00f4b, type: 2}
+    - tile: {fileID: 11400000, guid: 70d531a55b6f4614cbbcdd5b4fe00f4b, type: 2}
+    - tile: {fileID: 11400000, guid: c53b0ed08614faa4b9b831dfdedfc0df, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
@@ -720,22 +720,22 @@ MonoBehaviour:
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: d078df569a91b95469c5db1b4ab853bd, type: 2}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 42c2ea76370c5dc448497f91316ce74d, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     background:
@@ -953,13 +953,13 @@ MonoBehaviour:
       position: {x: 3, y: 2, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    upSockets: 
+    upSockets: 020000000300000004000000050000000600000007000000
     downSockets: 
     leftSockets: 03000000040000000500000006000000
     rightSockets: 03000000040000000500000006000000
   - playground:
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
-    - tile: {fileID: 0}
+    - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
     - tile: {fileID: 0}
     - tile: {fileID: 0}
     - tile: {fileID: 11400000, guid: 6bee7a426d4f0004f8cdaf17fe0fe4b8, type: 2}
@@ -1266,6 +1266,6 @@ MonoBehaviour:
       rotation: {x: -0, y: -0, z: 0.121232696, w: 0.99262416}
       scale: {x: 1, y: 1, z: 1}
     upSockets: 05000000060000000700000008000000
-    downSockets: 010000000200000003000000
+    downSockets: 0200000003000000
     leftSockets: 
     rightSockets: 060000000700000008000000
